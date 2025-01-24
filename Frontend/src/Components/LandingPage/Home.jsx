@@ -1,6 +1,5 @@
+import Navbar from "../Shared/Navbar";
 import HeroSection from "./HeroSection";
-import Footer from "../shared/Footer";
-import Navbar from "../shared/Navbar";
 
 const Home = () => {
     return (
