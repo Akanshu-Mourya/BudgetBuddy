@@ -19,7 +19,7 @@ const HeroSection = () => {
                     <div className="flex flex-col md:flex-row items-center justify-start mt-10 gap-4">
                         {/* Call-to-Action Button */}
                         <Link
-                            to="/signup"
+                            to="/register"
                             className="bg-[#257c8a] text-white py-2 px-10 rounded-full hover:bg-[#2a8e9e] hover:shadow-xl transition duration-300 ease-in-out"
                             aria-label="Create Account"
                         >

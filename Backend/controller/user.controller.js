@@ -6,6 +6,7 @@ import validator from 'validator';
 export const register = async (req, resp) => {
     try {
         const { fullName, email, phoneNumber, password } = req.body;
+        console.log(req.body);
 
         if (!fullName || !email || !phoneNumber || !password) {
             return resp.status(400).json({
@@ -40,7 +41,7 @@ export const register = async (req, resp) => {
             password: hashedPassword,
         });
 
-        return resp.status(201).json({  
+        return resp.status(201).json({
             message: "User registered successfully",
             success: true,
         });
@@ -79,7 +80,7 @@ export const login = async (req, resp) => {
         }
 
         // Generate JWT token
-        
+
         const tokenData = { userId: user._id };
         const token = jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' });
 

@@ -12,6 +12,9 @@ const Navbar = () => {
     <div>
       <div className='flex items-center justify-between px-4 lg:px-8 mx-auto max-w-7xl h-16'>
         {/* Logo */}
+        <div className='h-20 w-20  rounded-full overflow-hidden'>
+          <img src="/images/BudgetBuddyLogo.jpg" alt="" className="h-full w-full object-cover" />
+        </div>
         <div>
           <h1 className='text-2xl font-bold'>
             Budget
@@ -30,9 +33,8 @@ const Navbar = () => {
 
         {/* Navbar Links */}
         <div
-          className={`flex justify-center flex-grow ${
-            isMobileMenuOpen ? 'block' : 'hidden'
-          } lg:flex`}
+          className={`flex justify-center flex-grow ${isMobileMenuOpen ? 'block' : 'hidden'
+            } lg:flex`}
         >
           <ul className='flex justify-center items-center flex-col md:flex-row font-medium gap-10'>
             <li>
@@ -85,7 +87,7 @@ const Navbar = () => {
         <div className="flex flex-col md:flex-row items-center gap-5 mt-4 md:mt-0">
           <div className='flex items-center gap-2'>
             <a
-              href="/signup"
+              href="/register"
               className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300"
             >
               Get Started
