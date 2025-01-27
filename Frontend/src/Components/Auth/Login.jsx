@@ -8,39 +8,50 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setUser } from "@/redux/authSlice";
 import axios from "axios";
-import { USER_API_END_POINT } from "@/utils/constant";
+import { REACT_APP_GOOGLE_CLIENT_ID, USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+// import jwtDecode from "jwt-decode";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [input, setInput] = useState({
+        email: "",
+        password: "",
+        googleToken: "", // For Google login token
+    });
+
+    const { loading, user } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const [input, setInput] = useState({
-        email: "",
-        password: "",
-    });
-
-    const { loading, user } = useSelector((state) => state.auth)
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
-    }
+    };
 
     const submitHandler = async (e) => {
         e.preventDefault();
+
+        if (!input.email || !input.password) {
+            toast.error("Please fill in all fields.");
+            return;
+        }
+
         try {
             dispatch(setLoading(true));
             const response = await axios.post(`${USER_API_END_POINT}/login`, input, {
                 headers: {
                     "Content-Type": "application/json",
-                }, withCredentials: true
+                },
+                withCredentials: true,
             });
+
             if (response.data.success) {
                 dispatch(setUser(response.data.user));
                 navigate("/dashboard");
@@ -52,12 +63,45 @@ const Login = () => {
         } finally {
             dispatch(setLoading(false));
         }
-    }
+    };
+
+    const handleGoogleSuccess = (response) => {
+        console.log("Google Sign-In Success", response);
+        const decoded = jwtDecode(response?.credential);
+        console.log(decoded.name);
+
+        // Send Google token to backend
+        setInput({
+            ...input,
+            googleToken: response.credential, // Set the google token
+        });
+
+        // Send the google token to the backend
+        axios
+            .post(`${USER_API_END_POINT}/login`, { googleToken: response.credential })
+            .then((res) => {
+                if (res.data.success) {
+                    dispatch(setUser(res.data.user));
+                    navigate("/dashboard");
+                    toast.success(res.data.message);
+                }
+            })
+            .catch((error) => {
+                console.log("Error logging in with Google:", error);
+                toast.error(error?.response?.data?.message || "Something went wrong");
+            });
+    };
+
+    const handleGoogleError = (error) => {
+        console.log("Google Sign-In Error", error);
+    };
+
     useEffect(() => {
         if (user) {
-            navigate("/login");
+            navigate("/dashboard");
         }
     }, [user, navigate]);
+
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
             <Card className="w-full max-w-4xl flex overflow-hidden rounded-2xl shadow-lg">
@@ -68,7 +112,9 @@ const Login = () => {
 
                     <div className="flex gap-4 mt-6">
                         <Button className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
-                            <FaGoogle className="mr-2" /> Google
+                            <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+                                <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
+                            </GoogleOAuthProvider>
                         </Button>
                         <Button className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
                             <FaFacebook className="mr-2" /> Facebook
@@ -123,21 +169,21 @@ const Login = () => {
                             </Button>
                         ) : (
                             <Button type="submit" className="w-full bg-[#257c8a] text-white hover:bg-[#2a8e9e]">
-                                Signup
+                                Login
                             </Button>
                         )}
                     </form>
 
                     <span className="flex justify-center text-sm text-gray-600 mt-3">
                         Don’t have an account?{" "}
-                        <Link to="/register" className='text-blue-600 hover:underline'>
+                        <Link to="/register" className="text-blue-600 hover:underline">
                             Create an account
                         </Link>
                     </span>
                 </div>
 
-                {/* Right Section (Hidden on Mobile, Visible on Larger Screens) */}
-                <div className="md:block hidden  w-1/2 bg-[#257c8a] p-10 flex flex-col justify-center items-center text-white">
+                {/* Right Section */}
+                <div className="md:block hidden w-1/2 bg-[#257c8a] p-10 flex flex-col justify-center items-center text-white">
                     <div className="w-48 h-48 bg-white rounded-full flex items-center justify-center mt-10 mx-auto">
                         <img
                             src="/images/BudgetBuddyLogo.jpg"

@@ -2,15 +2,51 @@ import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from 'validator';
+import { OAuth2Client } from "google-auth-library";
+
 
 export const register = async (req, resp) => {
     try {
-        const { fullName, email, phoneNumber, password } = req.body;
-        console.log(req.body);
+        const { fullName, email, phoneNumber, password, isGoogleUser, googleSub } = req.body;
+        // console.log(req.body);
 
-        if (!fullName || !email || !phoneNumber || !password) {
+        // Check required fields
+        if (!email) {
             return resp.status(400).json({
-                message: "All fields are required",
+                message: "Email is required",
+                success: false,
+            });
+        }
+
+        // Handle Google User Registration
+        if (isGoogleUser) {
+            const existingGoogleUser = await User.findOne({ email });
+
+            if (existingGoogleUser) {
+                return resp.status(409).json({
+                    message: "Google user already exists with this email",
+                    success: false,
+                });
+            }
+
+            // Save Google user in DB
+            await User.create({
+                fullName,
+                email,
+                googleSub, // Google unique identifier (sub)
+                isGoogleUser: true,
+            });
+
+            return resp.status(201).json({
+                message: "Google user registered successfully",
+                success: true,
+            });
+        }
+
+        // Handle Traditional Registration
+        if (!fullName || !phoneNumber || !password) {
+            return resp.status(400).json({
+                message: "All fields are required for traditional signup",
                 success: false,
             });
         }
@@ -24,7 +60,6 @@ export const register = async (req, resp) => {
         }
 
         const existingUser = await User.findOne({ email });
-
         if (existingUser) {
             return resp.status(409).json({
                 message: "User already exists with this email",
@@ -33,7 +68,6 @@ export const register = async (req, resp) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-
         await User.create({
             fullName,
             email,
@@ -45,62 +79,108 @@ export const register = async (req, resp) => {
             message: "User registered successfully",
             success: true,
         });
-
     } catch (error) {
-        console.error(error);
+        console.error("Error:", error);
         return resp.status(500).json({
             message: "Internal server error",
             success: false,
         });
     }
 };
+
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const login = async (req, resp) => {
     try {
-        const { email, password } = req.body;
-        if (!email || !password) { // Corrected condition
-            return resp.status(400).json({
-                message: "Something is missing",
-                success: false,
+        const { email, password, googleToken } = req.body;
+        if (googleToken) {
+            // Google Authentication
+            const ticket = await client.verifyIdToken({
+                idToken: googleToken,
+                audience: process.env.GOOGLE_CLIENT_ID,
+            });
+            const payload = ticket.getPayload();
+
+            // Find user by email
+            const user = await User.findOne({ email: payload.email });
+
+            if (!user) {
+                return resp.status(400).json({
+                    message: "No user found with this email. Please register first.",
+                    success: false,
+                });
+            }
+
+            // Generate JWT token for Google login
+            const tokenData = { userId: user._id };
+            const token = jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: "1d" });
+
+            const userResponse = {
+                _id: user._id,
+                fullname: user.fullName,
+                email: user.email,
+                phoneNumber: user.phoneNumber,
+            };
+
+            return resp.status(200).cookie("token", token, {
+                maxAge: 24 * 60 * 60 * 1000,
+                httpOnly: true,
+                sameSite: "strict",
+                secure: process.env.NODE_ENV === "production",
+            }).json({
+                message: `Welcome back, ${userResponse.fullname}!`,
+                user: userResponse,
+                success: true,
+            });
+        } else {
+            // Traditional Email/Password Login
+            if (!email || !password) {
+                return resp.status(400).json({
+                    message: "Something is missing",
+                    success: false,
+                });
+            }
+
+            const user = await User.findOne({ email });
+            if (!user) {
+                return resp.status(400).json({
+                    message: "Incorrect email",
+                    success: false,
+                });
+            }
+
+            // Check Password
+            const isValidPassword = await bcrypt.compare(password, user.password);
+            if (!isValidPassword) {
+                return resp.status(400).json({
+                    message: "Incorrect password",
+                    success: false,
+                });
+            }
+
+            // Generate JWT token for traditional login
+            const tokenData = { userId: user._id };
+            const token = jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: "1d" });
+
+            const userResponse = {
+                _id: user._id,
+                fullname: user.fullName,
+                email: user.email,
+                phoneNumber: user.phoneNumber,
+            };
+
+            return resp.status(200).cookie("token", token, {
+                maxAge: 24 * 60 * 60 * 1000,
+                httpOnly: true,
+                sameSite: "strict",
+                secure: process.env.NODE_ENV === "production",
+            }).json({
+                message: `Welcome back, ${userResponse.fullname}!`,
+                user: userResponse,
+                success: true,
             });
         }
-        const user = await User.findOne({ email });
-        if (!user) {
-            return resp.status(400).json({
-                message: "Incorrect email",
-                success: false,
-            });
-        }
-        const isValidPassword = await bcrypt.compare(password, user.password);
-        if (!isValidPassword) { // Corrected condition
-            return resp.status(400).json({
-                message: "Incorrect password",
-                success: false,
-            });
-        }
-
-        // Generate JWT token
-
-        const tokenData = { userId: user._id };
-        const token = jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' });
-
-        const userResponse = {
-            _id: user._id,
-            fullname: user.fullName,
-            email: user.email,
-            phoneNumber: user.phoneNumber,
-        };
-        return resp.status(200).cookie("token", token, {
-            maxAge: 24 * 60 * 60 * 1000,
-            httpOnly: true,
-            sameSite: 'strict',
-            secure: process.env.NODE_ENV === "production",
-        }).json({
-            message: `Welcome back, ${userResponse.fullname}!`,
-            user: userResponse,
-            success: true,
-        });
-
     } catch (error) {
         console.error(error);
         return resp.status(500).json({
@@ -109,6 +189,7 @@ export const login = async (req, resp) => {
         });
     }
 };
+
 
 export const logout = async (req, resp) => {
     try {
