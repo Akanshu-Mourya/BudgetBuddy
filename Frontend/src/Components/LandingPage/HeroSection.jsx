@@ -7,12 +7,13 @@ const HeroSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 {/* Text Section */}
                 <section className="m-5 p-8 bg-white">
-                    <h1 className="text-6xl font-extrabold text-gray-800 leading-tight">
+                    <h1 className="text-4xl font-extrabold text-gray-800 leading-tight  sm:text-6xl ">
                         Simplify Your Budgeting with Budget
                         <span className="text-[#2a8e9e] hover:text-[#257c8a] cursor-pointer transition duration-300">
                             Buddy
                         </span>
                     </h1>
+
                     <p className="text-gray-700 mt-6 text-lg md:text-xl leading-relaxed">
                         Take control of your finances and achieve your savings goals effortlessly with BudgetBuddy's intuitive budgeting tools.
                     </p>
@@ -20,7 +21,7 @@ const HeroSection = () => {
                         {/* Call-to-Action Button */}
                         <Link
                             to="/register"
-                            className="bg-[#257c8a] text-white py-2 px-10 rounded-full hover:bg-[#2a8e9e] hover:shadow-xl transition duration-300 ease-in-out"
+                            className="bg-[#257c8a] text-white py-2 px-10 rounded-full hover:bg-[#2a8e9e] hover:shadow-xl transition duration-300 ease-in-out w-full text-center lg:w-80  "
                             aria-label="Create Account"
                         >
                             Create Account
@@ -76,11 +77,11 @@ const HeroSection = () => {
                 </section>
 
                 {/* Image Section */}
-                <section className="m-5 p-6 bg-white bg-opacity-80 rounded-lg">
+                <section className="m-5 p-6 bg-white bg-opacity-80 rounded-lg hidden lg:block">
                     <img
                         src="/images/ProfessionalCollaboration.jpg"
                         alt="Financial Features Grid"
-                        className="rounded-lg w-full h-[400px] sm:h-[500px] md:h-[500px] lg:h-[500px] object-cover"
+                        className="rounded-lg w-full h-[400px] sm:h-[500px] md:h-[500px] lg:h-[500px] object-cover hidden lg:block"
                     />
                 </section>
             </div>
