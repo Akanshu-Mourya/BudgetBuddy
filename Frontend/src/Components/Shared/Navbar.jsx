@@ -100,7 +100,7 @@ const Navbar = () => {
         </div>
         {/* Get Started Button - Always Visible on Large Screens, Moves Down on Small Screens */}
         <div className="hidden md:flex">
-          <a href="/signup" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300">
+          <a href="/register" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300">
             Get Started
           </a>
         </div>
@@ -116,7 +116,7 @@ const Navbar = () => {
 
       {/* Get Started Button - Visible below Navbar on Small Screens */}
       <div className="flex sm:max-md:flex md:hidden justify-center mt-4  ">
-        <a href="/signup" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300">
+        <a href="/register" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300">
           Get Started
         </a>
       </div>
