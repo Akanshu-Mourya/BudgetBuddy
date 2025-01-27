@@ -55,7 +55,7 @@ const Login = () => {
     }
     useEffect(() => {
         if (user) {
-            navigate("/register");
+            navigate("/login");
         }
     }, [user, navigate]);
     return (
