@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaEye, FaEyeSlash, FaFacebook, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
-import { USER_API_END_POINT } from "@/utils/constant";
+import { REACT_APP_GOOGLE_CLIENT_ID, USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 const SignUp = () => {
   const [input, setInput] = useState({
@@ -21,22 +23,23 @@ const SignUp = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-
   const [errors, setErrors] = useState({});
   const { loading, user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Handle form input change
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  // Validate form inputs
   const validate = () => {
     const newErrors = {};
     if (!input.name) newErrors.name = "Name is required";
@@ -50,13 +53,14 @@ const SignUp = () => {
     }
     if (!input.password) {
       newErrors.password = "Password is required";
-    } else if (input.password.length < 6) {
+    } else if (!input.password) {
       newErrors.password = "Password must be at least 6 characters";
     }
 
     return newErrors;
   };
 
+  // Handle form submission
   const submitHandler = async (e) => {
     e.preventDefault();
     const newErrors = validate();
@@ -64,9 +68,6 @@ const SignUp = () => {
       setErrors(newErrors);
       return;
     }
-
-    // Log input to ensure proper data structure
-    // console.log(input);
 
     try {
       dispatch(setLoading(true));
@@ -77,21 +78,14 @@ const SignUp = () => {
       formData.append("phoneNumber", input.phoneNumber);
       formData.append("password", input.password);
 
-      // console.log(formData);
-      // for (let [key, value] of formData.entries()) {
-      //   console.log(`${key}: ${value}`);
-      // }
-
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
 
       if (res.data.success) {
-        navigate("/login");
         toast.success(res.data.message);
+        navigate("/login");
       }
     } catch (error) {
       console.error("Network Error:", error);
@@ -101,9 +95,37 @@ const SignUp = () => {
     }
   };
 
+  // Handle Google login success
+  const handleGoogleSuccess = async (response) => {
+    const decoded = jwtDecode(response.credential);
+    const { name, email, sub } = decoded;
+
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/register`, {
+        fullName: name,
+        email,
+        googleSub: sub, // Store Google's unique ID
+        isGoogleUser: true, // Flag to indicate Google login
+      });
+
+      if (res.data.success) {
+        toast.success("Google registration successful!");
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Google registration failed");
+    }
+  };
+
+  // Handle Google login error
+  const handleGoogleError = (error) => {
+    console.log("Google Login Error", error);
+    toast.error("Google login failed");
+  };
+
   useEffect(() => {
     if (user) {
-      navigate("/register");
+      navigate("/dashboard");
     }
   }, [user, navigate]);
 
@@ -113,19 +135,23 @@ const SignUp = () => {
         {/* Left Section */}
         <div className="w-full md:w-1/2 bg-white p-10">
           <h1 className="text-2xl font-semibold text-gray-800">Create Your Account</h1>
-          <p className="text-sm text-gray-500 mt-2">
-            Join us and enjoy all the benefits!
-          </p>
+          <p className="text-sm text-gray-500 mt-2">Join us and enjoy all the benefits!</p>
+
+          {/* Google and Facebook Buttons */}
           <div className="flex gap-4 mt-6">
             <Button className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
-              <FaGoogle className="mr-2" /> Google
+              <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+                <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
+              </GoogleOAuthProvider>
             </Button>
             <Button className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
               <FaFacebook className="mr-2" /> Facebook
             </Button>
           </div>
+
           <p className="text-center text-gray-500 text-sm mt-6">or continue with email</p>
 
+          {/* Email/Password Form */}
           <form onSubmit={submitHandler} className="mt-6 space-y-4">
             {/* Name Input */}
             <div>
@@ -185,6 +211,21 @@ const SignUp = () => {
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
 
+            {/* Confirm Password Input */}
+            {/* <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                value={input.confirmPassword}
+                name="confirmPassword"
+                onChange={changeEventHandler}
+                placeholder="Confirm Password"
+                className="w-full border-gray-300"
+              />
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+              )}
+            </div> */}
+
             {/* Submit Button */}
             {loading ? (
               <Button className="w-full bg-[#257c8a] text-white hover:bg-[#2a8e9e]">
@@ -204,7 +245,7 @@ const SignUp = () => {
           </span>
         </div>
 
-        {/* Right Section (Hidden on Mobile, Visible on Larger Screens) */}
+        {/* Right Section (Hidden on Mobile) */}
         <div className="w-1/2 md:block hidden bg-[#257c8a] p-10 flex flex-col justify-center items-center text-white">
           <div className="w-48 h-48 bg-white rounded-full flex items-center justify-center mt-10 mx-auto">
             <img

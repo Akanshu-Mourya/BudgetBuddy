@@ -105,11 +105,11 @@ const Navbar = () => {
           </a>
         </div>
 
-       
-          <div className="hidden md:flex py-2 px-2 ">
-        <DarkMode />
-         
-          
+
+        <div className="hidden md:flex py-2 px-2 ">
+          <DarkMode />
+
+
         </div>
 
       </div>
@@ -196,7 +196,7 @@ const MobileNavbar = () => {
 
 
 
-// navvar responsive krna h niche  jo vp me code coment h wo code responsive krne ke liye use karna h wo phle ka code h 
+// navvar responsive krna h niche  jo vp me code coment h wo code responsive krne ke liye use karna h wo phle ka code h
 
 
 
