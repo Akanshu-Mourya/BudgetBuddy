@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaEye, FaEyeSlash, FaFacebook, FaGoogle } from "react-icons/fa";
@@ -125,7 +125,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/dashboard");
+      navigate("/register");
     }
   }, [user, navigate]);
 
@@ -138,15 +138,13 @@ const SignUp = () => {
           <p className="text-sm text-gray-500 mt-2">Join us and enjoy all the benefits!</p>
 
           {/* Google and Facebook Buttons */}
-          <div className="flex gap-4 mt-6">
-            <Button className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
+          <div className="flex gap-4 mt-6 justify-center justify-items-center w-full">
+            <Button>
               <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
                 <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
               </GoogleOAuthProvider>
             </Button>
-            <Button className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
-              <FaFacebook className="mr-2" /> Facebook
-            </Button>
+
           </div>
 
           <p className="text-center text-gray-500 text-sm mt-6">or continue with email</p>
