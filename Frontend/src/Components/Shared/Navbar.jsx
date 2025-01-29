@@ -135,13 +135,9 @@ const MobileNavbar = () => {
 
     <Sheet >
       <SheetTrigger asChild>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <Button size="icon" className="rounded-full bg-gray-200 hover:bg-gray-200" variant="outline">
-            <Menu />
-          </Button>
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <Button size="icon" className="rounded-full bg-gray-200 hover:bg-gray-200" variant="outline">
+          <Menu />
+        </Button>
 
       </SheetTrigger>
       <SheetContent className="flex flex-col   bg-white text-black">

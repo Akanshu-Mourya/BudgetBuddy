@@ -25,7 +25,6 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const { loading, user } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,7 +52,7 @@ const SignUp = () => {
     }
     if (!input.password) {
       newErrors.password = "Password is required";
-    } else if (!input.password) {
+    } else if (input.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
     }
 
@@ -130,27 +129,24 @@ const SignUp = () => {
   }, [user, navigate]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 flex-col md:flex-row">
-      <Card className="w-full max-w-4xl flex overflow-hidden rounded-2xl shadow-lg">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 sm:px-6">
+      <Card className="w-full max-w-4xl flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-lg bg-white">
         {/* Left Section */}
-        <div className="w-full md:w-1/2 bg-white p-10">
-          <h1 className="text-2xl font-semibold text-gray-800">Create Your Account</h1>
-          <p className="text-sm text-gray-500 mt-2">Join us and enjoy all the benefits!</p>
+        <div className="w-full md:w-1/2 p-6 md:p-10">
 
+          <h1 className="text-xl md:text-2xl font-semibold text-gray-800">
+            Create Your Account                    </h1>
+          <p className="text-sm md:text-base text-gray-600 mt-2">
+            Join us and enjoy all the benefits!          </p>
           {/* Google and Facebook Buttons */}
-          <div className="flex gap-4 mt-6">
-            <Button className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
-              <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
-                <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
-              </GoogleOAuthProvider>
-            </Button>
-            <Button className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
-              <FaFacebook className="mr-2" /> Facebook
-            </Button>
+          <div className="flex justify-start mt-6">
+            <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+              <GoogleLogin onSuccess={handleGoogleSuccess} />
+            </GoogleOAuthProvider>
           </div>
-
-          <p className="text-center text-gray-500 text-sm mt-6">or continue with email</p>
-
+          <p className="text-center text-gray-500 font-bold text-sm mt-6">
+            or register with your email
+          </p>
           {/* Email/Password Form */}
           <form onSubmit={submitHandler} className="mt-6 space-y-4">
             {/* Name Input */}
@@ -161,7 +157,7 @@ const SignUp = () => {
                 name="name"
                 onChange={changeEventHandler}
                 placeholder="Full Name"
-                className="w-full border-gray-300"
+                className="w-full border-gray-300 text-sm md:text-base"
               />
               {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
@@ -174,7 +170,7 @@ const SignUp = () => {
                 name="email"
                 onChange={changeEventHandler}
                 placeholder="Email"
-                className="w-full border-gray-300"
+                className="w-full border-gray-300 text-sm md:text-base"
               />
               {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
@@ -187,7 +183,7 @@ const SignUp = () => {
                 name="phoneNumber"
                 onChange={changeEventHandler}
                 placeholder="Phone Number"
-                className="w-full border-gray-300"
+                className="w-full border-gray-300 text-sm md:text-base"
               />
               {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
             </div>
@@ -200,7 +196,7 @@ const SignUp = () => {
                 name="password"
                 onChange={changeEventHandler}
                 placeholder="Password"
-                className="w-full border-gray-300"
+                className="w-full border-gray-300 text-sm md:text-base"
               />
               <div
                 className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 cursor-pointer"
@@ -211,32 +207,20 @@ const SignUp = () => {
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
 
-            {/* Confirm Password Input */}
-            {/* <div className="relative">
-              <Input
-                type={showPassword ? "text" : "password"}
-                value={input.confirmPassword}
-                name="confirmPassword"
-                onChange={changeEventHandler}
-                placeholder="Confirm Password"
-                className="w-full border-gray-300"
-              />
-              {errors.confirmPassword && (
-                <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
-              )}
-            </div> */}
-
             {/* Submit Button */}
-            {loading ? (
-              <Button className="w-full bg-[#257c8a] text-white hover:bg-[#2a8e9e]">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Please wait...
-              </Button>
-            ) : (
-              <Button type="submit" className="w-full bg-[#257c8a] text-white hover:bg-[#2a8e9e]">
-                Signup
-              </Button>
-            )}
+            <Button
+              type="submit"
+              className="w-full bg-[#257c8a] text-white hover:bg-[#2a8e9e] text-sm md:text-base"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait...
+                </>
+              ) : (
+                "Login"
+              )}
+            </Button>
           </form>
 
           <span className="flex justify-center text-sm text-gray-600 mt-3">
@@ -245,21 +229,20 @@ const SignUp = () => {
           </span>
         </div>
 
-        {/* Right Section (Hidden on Mobile) */}
-        <div className="w-1/2 md:block hidden bg-[#257c8a] p-10 flex flex-col justify-center items-center text-white">
-          <div className="w-48 h-48 bg-white rounded-full flex items-center justify-center mt-10 mx-auto">
+        <div className="hidden md:flex w-1/2 bg-[#257c8a] p-6 md:p-10 flex-col justify-center items-center text-white">
+          <div className="w-48 h-48 bg-white rounded-full flex items-center justify-center mx-auto">
             <img
               src="/images/BudgetBuddyLogo.jpg"
               alt="Integration graphic"
-              className="w-40 h-40 rounded-full"
+              className="w-52 h-48 rounded-full"
             />
           </div>
-          <div className="text-center mt-6">
-            <h2 className="text-xl font-semibold mt-6">Explore New Opportunities</h2>
-            <p className="text-center text-sm mt-2">
-              Join BudgetBuddy and begin your path to smarter financial management.
-            </p>
-          </div>
+          <h2 className="text-lg md:text-xl font-bold mt-6 text-center">
+            Explore New Opportunities
+          </h2>
+          <p className="text-sm md:text-base text-center mt-2">
+            Join BudgetBuddy and begin your path to smarter financial management.
+          </p>
         </div>
       </Card>
     </div>

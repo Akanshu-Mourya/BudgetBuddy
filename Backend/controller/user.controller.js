@@ -8,7 +8,7 @@ import { OAuth2Client } from "google-auth-library";
 export const register = async (req, resp) => {
     try {
         const { fullName, email, phoneNumber, password, isGoogleUser, googleSub } = req.body;
-        // console.log(req.body);
+        console.log(req.body);
 
         // Check required fields
         if (!email) {
