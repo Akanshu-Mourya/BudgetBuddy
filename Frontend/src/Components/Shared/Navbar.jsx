@@ -35,7 +35,6 @@ import {
 
 import { Menu } from 'lucide-react';
 import { Separator } from "@radix-ui/react-dropdown-menu";
-import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -72,7 +71,7 @@ const Navbar = () => {
 
         {/* Navbar Links - Hidden in Mobile */}
         <div className={` md:block flex-grow justify-center  ${isMobileMenuOpen ? 'block' : 'hidden'} lg:flex  mt-28 md:mt-0`}  >
-          <ul className='flex justify-center items-center flex-col font-medium md:flex-row lg:gap-10 md:gap-15 gap-2 '>
+          <ul className='flex justify-center items-center flex-col md:flex-row font-medium md:gap-10 gap-2'>
             <li>
               <ScrollLink to="hero-section" smooth={true} duration={500} className='hover:text-[#257c8a] transition duration-300 cursor-pointer'>
                 Home
@@ -100,12 +99,10 @@ const Navbar = () => {
           <MobileNavbar />
         </div>
         {/* Get Started Button - Always Visible on Large Screens, Moves Down on Small Screens */}
-        <div className="hidden md:flex ">
-          <Link to="/register" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300"
-            aria-label="Get Started"
-          >
+        <div className="hidden md:flex">
+          <a href="/register" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300">
             Get Started
-          </Link>
+          </a>
         </div>
 
 
@@ -116,13 +113,13 @@ const Navbar = () => {
         </div>
 
       </div>
-      <div className="hidden  justify-center mt-4">
-        <Link to="/register" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300"
-          aria-label="Get Started">
-          Get Started
-        </Link>
-      </div>
 
+      {/* Get Started Button - Visible below Navbar on Small Screens */}
+      <div className="flex sm:max-md:flex md:hidden justify-center mt-4  ">
+        <a href="/register" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300">
+          Get Started
+        </a>
+      </div>
     </div>
   );
 };
@@ -138,25 +135,20 @@ const MobileNavbar = () => {
 
     <Sheet >
       <SheetTrigger asChild>
-        <Button size="icon" className="rounded-full bg-gray-200 hover:bg-gray-200" variant="ghost">
+        <Button size="icon" className="rounded-full bg-gray-200 hover:bg-gray-200" variant="outline">
           <Menu />
         </Button>
 
       </SheetTrigger>
       <SheetContent className="flex flex-col   bg-white text-black">
         <SheetHeader className="flex flex-row items-center justify-between mt-2">
-          <SheetTitle>
-            Budget
-            <span className='text-[#2a8e9e] hover:text-[#257c8a] cursor-pointer transition duration-300'>
-              Buddy
-            </span>
-          </SheetTitle>
+          <SheetTitle>E-learning</SheetTitle>
           <DarkMode />
         </SheetHeader>
         <Separator className="mr-2 " />
-        <nav className="flex flex-col space-y-4 font-medium">
+        <nav className="flex flex-col space-y-4 ">
 
-          <ul className="flex flex-col space-y-4">
+          <ul >
             <li>
               <ScrollLink to="hero-section" smooth={true} duration={500} className='hover:text-[#257c8a] transition duration-300 cursor-pointer'>
                 Home
@@ -178,18 +170,13 @@ const MobileNavbar = () => {
               </ScrollLink>
             </li>
           </ul>
-          {/* <p>Log out</p> */}
+          <p>Log out</p>
         </nav>
         {
           role === "instructor" && (
             <SheetFooter>
               <SheetClose asChild>
-                <div className="flex sm:max-md:flex justify-center mt-4 w-full">
-                  <Link to="/register" className="bg-[#257c8a] text-white py-2 px-16 rounded-md hover:bg-[#2a8e9e] transition duration-300"
-                    aria-label="Create Account">
-                    Get Started
-                  </Link>
-                </div>
+                <Button className="bg-black text-white" type="submit ">Dashboard</Button>
               </SheetClose>
             </SheetFooter>
           )
