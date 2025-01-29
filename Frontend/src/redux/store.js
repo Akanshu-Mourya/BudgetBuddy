@@ -4,22 +4,22 @@ import authSlice from "./authSlice";
 // import companySlice from './companySlice';
 // import applicationSlice from './applicationSlice';
 
-// import {
-//     persistReducer,
-//     FLUSH,
-//     REHYDRATE,
-//     PAUSE,
-//     PERSIST,
-//     PURGE,
-//     REGISTER,
-// } from 'redux-persist'
-// import storage from 'redux-persist/lib/storage'
+import {
+    persistReducer,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
-// const persistConfig = {
-//     key: 'root',
-//     version: 1,
-//     storage,
-// }
+const persistConfig = {
+    key: 'root',
+    version: 1,
+    storage,
+}
 
 const rootReducer = combineReducers({
     auth: authSlice,
@@ -27,17 +27,17 @@ const rootReducer = combineReducers({
     // company: companySlice,
     // application: applicationSlice
 })
-// const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
-    // reducer: persistedReducer,
-    reducer: rootReducer,
-    // middleware: (getDefaultMiddleware) =>
-    //     getDefaultMiddleware({
-    //         serializableCheck: {
-    //             ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    //         },
-    //     }),
+    reducer: persistedReducer,
+    // reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),
 });
 export default store;
 
