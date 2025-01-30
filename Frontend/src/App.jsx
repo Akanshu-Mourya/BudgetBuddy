@@ -17,14 +17,14 @@ const appRouter = createBrowserRouter([
     path: '/register',
     element: <SignUp />
   },
-  {
-    path: '/dashboard',
-    element: (
-      <div>
-        <Sidebar />
-      </div>
-    ),
-  }
+  // {
+  //   path: '/dashboard',
+  //   element: (
+  //     <div>
+  //       <Sidebar />
+  //     </div>
+  //   ),
+  // }
 
 ]);
 
