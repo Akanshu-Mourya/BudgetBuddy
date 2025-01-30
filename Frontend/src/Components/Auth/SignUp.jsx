@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaEye, FaEyeSlash, FaFacebook, FaGoogle } from "react-icons/fa";
@@ -124,7 +124,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/dashboard");
+      navigate("/register");
     }
   }, [user, navigate]);
 
@@ -139,10 +139,13 @@ const SignUp = () => {
           <p className="text-sm md:text-base text-gray-600 mt-2">
             Join us and enjoy all the benefits!          </p>
           {/* Google and Facebook Buttons */}
-          <div className="flex justify-start mt-6">
-            <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
-              <GoogleLogin onSuccess={handleGoogleSuccess} />
-            </GoogleOAuthProvider>
+          <div className="flex gap-4 mt-6 justify-center justify-items-center w-full">
+            <Button>
+              <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+                <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
+              </GoogleOAuthProvider>
+            </Button>
+
           </div>
           <p className="text-center text-gray-500 font-bold text-sm mt-6">
             or register with your email
