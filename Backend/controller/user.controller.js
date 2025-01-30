@@ -2,7 +2,8 @@ import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from 'validator';
-import { OAuth2Client } from "google-auth-library";
+// import { OAuth2Client } from "google-auth-library";
+import{OAuth2Client} from 'google-auth-library';
 
 
 export const register = async (req, resp) => {
