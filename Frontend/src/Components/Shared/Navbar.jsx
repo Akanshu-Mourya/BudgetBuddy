@@ -52,7 +52,7 @@ const Navbar = () => {
         {/* Logo and Name */}
         <div className='flex items-center gap-3'>
           <div className='h-20 w-20 rounded-full overflow-hidden'>
-            <img src="/images/BudgetBuddyLogo.jpg" alt="Logo" className="h-full w-full object-cover" />
+            <img src="/images/BudgetBuddyLog1o.jpg" alt="Logo" className="h-full w-full object-cover" />
           </div>
           <h1 className='text-2xl font-bold'>
             Budget
@@ -100,7 +100,7 @@ const Navbar = () => {
         </div>
         {/* Get Started Button - Always Visible on Large Screens, Moves Down on Small Screens */}
         <div className="hidden md:flex">
-          <a href="/register" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300">
+          <a href="/login" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300">
             Get Started
           </a>
         </div>
@@ -116,7 +116,7 @@ const Navbar = () => {
 
       {/* Get Started Button - Visible below Navbar on Small Screens */}
       <div className="flex sm:max-md:flex md:hidden justify-center mt-4  ">
-        <a href="/register" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300">
+        <a href="/login" className="bg-[#257c8a] text-white py-2 px-7 rounded-md hover:bg-[#2a8e9e] transition duration-300">
           Get Started
         </a>
       </div>
@@ -135,13 +135,9 @@ const MobileNavbar = () => {
 
     <Sheet >
       <SheetTrigger asChild>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <Button size="icon" className="rounded-full bg-gray-200 hover:bg-gray-200" variant="outline">
+      <Button size="icon" className="rounded-full bg-gray-200 hover:bg-gray-200" variant="outline">
             <Menu />
           </Button>
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
 
       </SheetTrigger>
       <SheetContent className="flex flex-col   bg-white text-black">
