@@ -81,11 +81,13 @@ const Login = () => {
                         Welcome back! Choose a login method
                     </p>
 
-                    {/* Google Login */}
-                    <div className="flex justify-start mt-6">
-                        <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
-                            <GoogleLogin onSuccess={handleGoogleSuccess} />
-                        </GoogleOAuthProvider>
+                    <div className="flex gap-4 mt-6 justify-center justify-items-center w-full">
+                        <Button>
+                            <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+                                <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
+                            </GoogleOAuthProvider>
+                        </Button>
+
                     </div>
 
                     <p className="text-center text-gray-500 font-bold text-sm mt-6">
