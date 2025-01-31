@@ -72,10 +72,12 @@ const SignUp = () => {
       dispatch(setLoading(true));
 
       const formData = new FormData();
+
       formData.append("fullName", input.name);
       formData.append("email", input.email);
       formData.append("phoneNumber", input.phoneNumber);
       formData.append("password", input.password);
+      // formData.append("isGoogleUser", false); // Add flag for regular registration
 
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
         headers: { "Content-Type": "application/json" },
@@ -84,7 +86,7 @@ const SignUp = () => {
 
       if (res.data.success) {
         toast.success(res.data.message);
-        navigate("/login");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Network Error:", error);
@@ -215,14 +217,7 @@ const SignUp = () => {
               type="submit"
               className="w-full bg-[#257c8a] text-white hover:bg-[#2a8e9e] text-sm md:text-base"
             >
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Please wait...
-                </>
-              ) : (
-                "Login"
-              )}
+              Register
             </Button>
           </form>
 

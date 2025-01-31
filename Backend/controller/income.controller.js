@@ -60,6 +60,7 @@ export const getIncomeByUserId = async (req, resp) => {
         }
 
         return resp.status(200).json({
+            message: "Income records fetched successfully",
             income,
             success: true,
         });
@@ -114,7 +115,10 @@ export const incomeDelete = async (req, resp) => {
         })
     } catch (error) {
         console.log(error);
-
+        return resp.status(500).json({
+            message: "Internal server error",
+            success: false,
+        });
     }
 }
 

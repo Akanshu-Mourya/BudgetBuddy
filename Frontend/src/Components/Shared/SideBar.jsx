@@ -1,15 +1,35 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Home, Briefcase, Settings, Menu, BarChart, FileText, Tag, LogOut } from "lucide-react";
 import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { MdAttachMoney } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/authSlice";
+import axios from "axios";
+import { toast } from "sonner";
+import { USER_API_END_POINT } from "@/utils/constant";
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false);
     const Effact = 'flex items-center gap-3 p-1 rounded-md hover:bg-[#257c8a] hover:text-white transition';
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const logoutHandler = async () => {
+        try {
+            const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
+            if (res.data.success) {
+                dispatch(setUser(null));
+                navigate('/');
+                toast.success(res.data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response?.data?.message || 'An error occurred');
+        }
+    };
     return (
         <div className="flex">
             {/* Mobile Sidebar */}
@@ -66,7 +86,7 @@ const Sidebar = () => {
                             <Settings size={24} />
                             Settings
                         </Link>
-                        <Link to="/logout" className={Effact}>
+                        <Link onClick={logoutHandler} className={Effact}>
                             <LogOut size={24} />
                             Logout
                         </Link>
@@ -124,7 +144,7 @@ const Sidebar = () => {
                         <Settings size={24} />
                         {!collapsed && "Settings"}
                     </Link>
-                    <Link to="/logout" className={`${Effact}`}>
+                    <Link onClick={logoutHandler} className={`${Effact}`}>
                         <LogOut size={24} />
                         {!collapsed && "Logout"}
                     </Link>
