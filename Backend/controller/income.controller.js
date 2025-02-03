@@ -11,7 +11,6 @@ export const addIncome = async (req, resp) => {
             });
         }
 
-
         const income = await Income.create({
             // transactionId,
             type,
@@ -72,7 +71,6 @@ export const getIncomeByUserId = async (req, resp) => {
         });
     }
 };
-
 
 export const updateIncome = async (req, resp) => {
     try {

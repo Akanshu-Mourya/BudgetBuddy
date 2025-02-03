@@ -5,6 +5,7 @@ import connectDB from "./utils/db.js";
 import userRoutes from "./routes/user.routes.js";
 import incomeRoutes from "./routes/income.routes.js";
 import expenseRoutes from "./routes/expense.routes.js";
+import borrowRoutes from "./routes/borrow.routes.js";
 import cors from 'cors';
 
 // Load environment variables
@@ -31,6 +32,7 @@ const PORT = process.env.PORT || 3000;
 app.use('/api/user', userRoutes);
 app.use('/api/income', incomeRoutes);
 app.use('/api/expense', expenseRoutes);
+app.use('/api/borrow', borrowRoutes);
 app.listen(PORT, () => {
     connectDB();
     console.log(`Server is running on port ${PORT}`);

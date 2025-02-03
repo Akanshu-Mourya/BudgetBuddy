@@ -25,23 +25,31 @@ const borrowSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    // Interest rate in percentage
-    borrowDate: {
-        type: Date,
-        default: Date.now
+    timePeriod: {
+        type: String,
+        required: true
     },
+    // Interest rate in percentage
+    // borrowDate: {
+    //     type: Date,
+    //     default: Date.now
+    // },
     dueDate: {
         type: Date,
         required: true
     },
+    totalAmount: {
+        type: Number,
+        required: true
+    }, // Amount repaid by borrower
     paidAmount: {
         type: Number,
         default: 0
-    }, // Amount repaid by borrower
+    },
     status: {
         type: String,
         enum: ["borrowed", "paid"],
         default: "borrowed"
     },
-});
+}, { timestamps: true });
 export const Borrow = mongoose.model('Borrow', borrowSchema);
