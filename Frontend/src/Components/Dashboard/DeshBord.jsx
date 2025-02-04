@@ -1,9 +1,10 @@
 import React from 'react'
 import Sidebar from '../Shared/SideBar'
+import { darkThemeColor } from '../DarkLiteMood/ThemeProvider'
 
 const DeshBord = () => {
   return (
-    <div className='flex'>
+    <div className={`${darkThemeColor} flex`}>
         <Sidebar/>
 
         <div>
