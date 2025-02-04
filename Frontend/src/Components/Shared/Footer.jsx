@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link as ScrollLink } from 'react-scroll';
+import { darkThemeColor } from '../DarkLiteMood/ThemeProvider';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0d3b42] text-white py-8">
+    <footer className={` dark:bg-gray-900 dark:text-white  bg-white text-black py-8`}>
       <div className="container mx-auto px-6 lg:px-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About Section */}
@@ -83,7 +84,7 @@ const Footer = () => {
         </div>
 
         {/* Footer Bottom */}
-        <div className="mt-8 border-t border-white/50 pt-4 text-center text-sm">
+        <div className="mt-8 border-t border-black/50 pt-4 text-center text-sm dark:border-white/50">
           <p>
             &copy; {new Date().getFullYear()} BudgetBuddy. All rights reserved.
           </p>

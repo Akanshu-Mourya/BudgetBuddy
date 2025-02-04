@@ -1,34 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import{darkThemeColor} from '../DarkLiteMood/ThemeProvider'
 
 const HeroSection = () => {
     return (
-        <div id="hero-section" className="container mx-auto px-10 lg:px-8 py-20">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div id="hero-section" className="container mx-auto px-10 lg:px-8 py-20  ">
+            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12`}>
                 {/* Text Section */}
-                <section className="m-5 p-8 bg-white">
-                    <h1 className="text-4xl font-extrabold text-gray-800 leading-tight  sm:text-6xl ">
+                <section className= {`m-5 p-8  md:w-fit ` }>
+                    <h1 className={`text-4xl font-extrabold text-gray-800 leading-tight dark:text-white sm:text-6xl `}>
                         Simplify Your Budgeting with Budget
                         <span className="text-[#2a8e9e] hover:text-[#257c8a] cursor-pointer transition duration-300">
                             Buddy
                         </span>
                     </h1>
 
-                    <p className="text-gray-700 mt-6 text-lg md:text-xl leading-relaxed">
+                    <p className={`text-gray-700 mt-6 text-lg md:text-xl leading-relaxed  dark:text-gray-400`}>
                         Take control of your finances and achieve your savings goals effortlessly with BudgetBuddy's intuitive budgeting tools.
                     </p>
-                    <div className="flex flex-col md:flex-row items-center justify-start mt-10 gap-4">
+                    <div className="flex flex-col 2xl:flex-row items-center  justify-start  mt-10 gap-4  ">
                         {/* Call-to-Action Button */}
                         <Link
                             to="/register"
-                            className="bg-[#257c8a] text-white py-2 px-10 rounded-full hover:bg-[#2a8e9e] hover:shadow-xl transition duration-300 ease-in-out w-full text-center lg:w-80  "
+                            className="bg-[#257c8a] dark:bg-[#257c8a]  text-white py-2 px-10 rounded-full hover:bg-[#2a8e9e] hover:shadow-xl transition duration-300 ease-in-out w-full text-center lg:max-w-72  "
                             aria-label="Create Account"
                         >
                             Create Account
                         </Link>
                         {/* Reviews Section */}
-                        <div className="flex items-center gap-6">
-                            <div className="flex items-center">
+                        <div className="flex items-center gap-6  ">
+                            <div className="flex items-center ">
                                 {[...Array(5)].map((_, index) => (
                                     <svg
                                         key={index}

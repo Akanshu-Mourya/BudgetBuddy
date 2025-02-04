@@ -4,10 +4,13 @@ import Contact from "./Contact";
 import Features from "./Features";
 import Footer from "../Shared/Footer";
 import HeroSection from "./HeroSection";
+import{ darkThemeColor} from '../DarkLiteMood/ThemeProvider'
+
+
 
 const Home = () => {
     return (
-        <div className="mt-5" id="home">
+        <div className={`${darkThemeColor} `} id="home">
 
             <Navbar />
             <HeroSection />

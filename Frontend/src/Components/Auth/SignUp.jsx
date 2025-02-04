@@ -12,6 +12,7 @@ import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
 
 const SignUp = () => {
   const [input, setInput] = useState({
@@ -131,14 +132,14 @@ const SignUp = () => {
   }, [user, navigate]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 sm:px-6">
-      <Card className="w-full max-w-4xl flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-lg bg-white">
+    <div className={`${darkThemeColor}  flex min-h-screen items-center justify-center bg-gray-100 px-4 sm:px-6`}>
+      <Card className={`${darkThemeColor} w-full max-w-4xl flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-2xl dark:shadow-gray-900 dark:hover:shadow-gray-950  bg-white`}>
         {/* Left Section */}
         <div className="w-full md:w-1/2 p-6 md:p-10">
 
-          <h1 className="text-xl md:text-2xl font-semibold text-gray-800">
+          <h1 className={`${darkThemeColor} text-xl md:text-2xl font-semibold text-gray-800`}>
             Create Your Account                    </h1>
-          <p className="text-sm md:text-base text-gray-600 mt-2">
+          <p className={`${darkThemeColor} text-sm md:text-base text-gray-600 mt-2`}>
             Join us and enjoy all the benefits!          </p>
           {/* Google and Facebook Buttons */}
           <div className="flex gap-4 mt-6 justify-center justify-items-center w-full">

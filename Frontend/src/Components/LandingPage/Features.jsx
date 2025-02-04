@@ -1,4 +1,5 @@
 import React from 'react';
+import{ darkThemeColor} from '../DarkLiteMood/ThemeProvider'
 
 const Features = () => {
     const features = [
@@ -26,12 +27,12 @@ const Features = () => {
 
 
     return (
-        <div id="features-section" className="bg-gray-50 py-20">
+        <div id="features-section" className={`${darkThemeColor }  bg-gray-50 py-20 `}>
             <div className="container mx-auto px-10" id='features'>
-                <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-10">
+                <h2 className={`dark:text-gray-300 text-4xl font-extrabold text-gray-800 text-center mb-10 `}>
                     Why Choose Budget<span className="text-[#2a8e9e]">Buddy</span>
                 </h2>
-                <p className="text-lg text-gray-600 text-center mb-16">
+                <p className= {`  dark:text-gray-300 text-lg text-gray-600 text-center mb-16`}>
                     Explore the powerful features designed to help you manage your finances better.
                 </p>
 
@@ -39,11 +40,11 @@ const Features = () => {
                     {features.map((feature, index) => (
                         <div
                             key={index}
-                            className="p-8 bg-white shadow-lg rounded-lg text-center transform hover:scale-105 transition-transform duration-300"
+                            className={`${darkThemeColor} p-8 bg-white shadow-md   rounded-lg text-center transform hover:scale-105 transition-transform duration-300 dark:shadow-gray-950   dark:hover:shadow-gray-300 `}
                         >
                             <div className="text-4xl mb-4">{feature.icon}</div>
-                            <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
-                            <p className="text-gray-600">{feature.description}</p>
+                            <h3 className={`${darkThemeColor} text-xl font-semibold text-gray-800 mb-2`}>{feature.title}</h3>
+                            <p className={`${darkThemeColor}text-gray-600 `}>{feature.description}</p>
                         </div>
                     ))}
                 </div>
