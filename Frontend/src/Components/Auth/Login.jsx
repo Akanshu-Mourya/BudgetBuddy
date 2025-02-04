@@ -64,7 +64,10 @@ const Login = () => {
             })
             .catch(() => toast.error("Google login failed"));
     };
-
+    const handleGoogleError = (error) => {
+        console.log("Google Login Error", error);
+        toast.error("Google login failed");
+    };
     useEffect(() => {
         if (user) navigate("/dashboard");
     }, [user, navigate]);
@@ -137,14 +140,15 @@ const Login = () => {
                             type="submit"
                             className="w-full bg-[#257c8a] text-white hover:bg-[#2a8e9e] text-sm md:text-base"
                         >
-                            {loading ? (
+                            {/* {loading ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                     Please wait...
                                 </>
                             ) : (
                                 "Login"
-                            )}
+                            )} */}
+                            Login
                         </Button>
                     </form>
 

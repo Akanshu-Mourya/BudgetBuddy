@@ -1,4 +1,5 @@
 import { Income } from '../models/income.models.js';
+
 export const addIncome = async (req, resp) => {
     try {
         const { type, category, amount, date, description, paymentMethod } = req.body;
@@ -10,7 +11,6 @@ export const addIncome = async (req, resp) => {
                 success: false,
             });
         }
-
 
         const income = await Income.create({
             // transactionId,
@@ -60,6 +60,7 @@ export const getIncomeByUserId = async (req, resp) => {
         }
 
         return resp.status(200).json({
+            message: "Income records fetched successfully",
             income,
             success: true,
         });
@@ -71,7 +72,6 @@ export const getIncomeByUserId = async (req, resp) => {
         });
     }
 };
-
 
 export const updateIncome = async (req, resp) => {
     try {
@@ -94,7 +94,10 @@ export const updateIncome = async (req, resp) => {
         })
     } catch (error) {
         console.log(error);
-
+        return resp.status(500).json({
+            message: "Internal server error",
+            success: false,
+        });
     }
 }
 
@@ -114,23 +117,28 @@ export const incomeDelete = async (req, resp) => {
         })
     } catch (error) {
         console.log(error);
-
+        return resp.status(500).json({
+            message: "Internal server error",
+            success: false,
+        });
     }
 }
 
 
 export const calculateTotalIncome = async (req, resp) => {
     try {
-        const userIds = await Income.find();
+        const userId = req.userId;
 
-        if (!userIds || userIds.length === 0) {
+        const userIncomes = await Income.find({ created_by: userId });
+
+        if (!userIncomes || userIncomes.length === 0) {
             return resp.status(404).json({
                 message: "No income found",
                 success: false
             });
         }
 
-        let totalIncome = userIds.reduce((sum, user) => sum + (user.amount || 0), 0);
+        let totalIncome = userIncomes.reduce((sum, user) => sum + (user.amount || 0), 0);
 
         return resp.status(200).json({
             message: "Total income calculated successfully",

@@ -1,4 +1,5 @@
 import React from 'react';
+// import financeImage from '../assets/finance-image.jpg'; // Adjust the path to your image
 
 const Contact = () => {
   return (
@@ -56,20 +57,13 @@ const Contact = () => {
             </form>
           </div>
 
-          {/* Contact Information */}
-          <div className="flex flex-col justify-center items-center text-center md:text-left">
-            <p className="text-gray-600 mb-4">
-              <strong>Email:</strong> support@budgetbuddy.com
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>Phone:</strong> +91 9090909090
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>Address:</strong> India
-            </p>
-            <p className="text-gray-600">
-              We're here to help you with any inquiries or concerns.
-            </p>
+          {/* Image Section */}
+          <div className="flex items-center justify-center">
+            <img
+              src="/images/—Pngtree—digital marketing management assistente_18677031.png"
+              alt="Personal Finance Management"
+              className="w-10/12 h-128 "
+            />
           </div>
         </div>
       </div>
