@@ -4,7 +4,7 @@ import { addIncome, incomeDelete, getIncomeByUserId, updateIncome, calculateTota
 
 const router = express.Router();
 router.route("/addIncome").post(isAuthenticated, addIncome);
-router.route('/getIncome/:id').get(isAuthenticated, getIncomeByUserId);
+router.route('/getIncome').get(isAuthenticated, getIncomeByUserId);
 router.route('/updateIncome/:id').put(isAuthenticated, updateIncome);
 router.route('/deleteIncome/:id').delete(isAuthenticated, incomeDelete);
 router.route('/getTotal').get(isAuthenticated, calculateTotalIncome);

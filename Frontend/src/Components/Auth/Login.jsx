@@ -65,11 +65,9 @@ const Login = () => {
             .catch(() => toast.error("Google login failed"));
     };
     const handleGoogleError = (error) => {
-        toast.error("Google login failed. Please try again.");
-        console.error("Google Login Error: ", error);
+        console.log("Google Login Error", error);
+        toast.error("Google login failed");
     };
-    
-
     useEffect(() => {
         if (user) navigate("/dashboard");
     }, [user, navigate]);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Home, Briefcase, Settings, Menu, BarChart, FileText, Tag, LogOut } from "lucide-react";
 import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";

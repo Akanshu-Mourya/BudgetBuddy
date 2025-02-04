@@ -1,5 +1,4 @@
 import React from 'react';
-import { darkThemeColor } from '../DarkLiteMood/ThemeProvider';
 
 const Contact = () => {
   const labelStyleClass = 'block text-sm font-medium text-gray-700';
@@ -47,10 +46,19 @@ const Contact = () => {
           </form>
 
           {/* Contact Information */}
-          <div className={`${darkThemeColor} flex flex-col justify-center items-center text-center md:text-left`}>
-          <div className='h-96 w-96 overflow-hidden'>
-            <img src="/images/formimg.png" alt="Logo"  />
-          </div>
+          <div className="flex flex-col justify-center items-center text-center md:text-left">
+            <p className="text-gray-600 mb-4">
+              <strong>Email:</strong> support@budgetbuddy.com
+            </p>
+            <p className="text-gray-600 mb-4">
+              <strong>Phone:</strong> +91 9090909090
+            </p>
+            <p className="text-gray-600 mb-4">
+              <strong>Address:</strong> India
+            </p>
+            <p className="text-gray-600">
+              We're here to help you with any inquiries or concerns.
+            </p>
           </div>
         </div>
       </div>
@@ -77,6 +85,3 @@ const FormField = ({ title, label, type, placeholder, labelStyle, inputStyle }) 
 };
 
 export default Contact;
-
-
-

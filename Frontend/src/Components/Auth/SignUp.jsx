@@ -73,10 +73,12 @@ const SignUp = () => {
       dispatch(setLoading(true));
 
       const formData = new FormData();
+
       formData.append("fullName", input.name);
       formData.append("email", input.email);
       formData.append("phoneNumber", input.phoneNumber);
       formData.append("password", input.password);
+      // formData.append("isGoogleUser", false); // Add flag for regular registration
 
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
         headers: { "Content-Type": "application/json" },
@@ -85,7 +87,7 @@ const SignUp = () => {
 
       if (res.data.success) {
         toast.success(res.data.message);
-        navigate("/login");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Network Error:", error);
@@ -140,7 +142,7 @@ const SignUp = () => {
           <p className={`${darkThemeColor} text-sm md:text-base text-gray-600 mt-2`}>
             Join us and enjoy all the benefits!          </p>
           {/* Google and Facebook Buttons */}
-          <div className="flex gap-4 mt-6 justify-center justify-items-center w-full ">
+          <div className="flex gap-4 mt-6 justify-center justify-items-center w-full">
             <Button>
               <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
                 <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
@@ -148,7 +150,7 @@ const SignUp = () => {
             </Button>
 
           </div>
-          <p className={` dark:text-gray-400 text-center text-gray-500 font-bold text-sm mt-6`}>
+          <p className="text-center text-gray-500 font-bold text-sm mt-6">
             or register with your email
           </p>
           {/* Email/Password Form */}
@@ -216,21 +218,13 @@ const SignUp = () => {
               type="submit"
               className="w-full bg-[#257c8a] text-white hover:bg-[#2a8e9e] text-sm md:text-base"
             >
-              {/* {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Please wait...
-                </>
-              ) : (
-                "Login"
-              )} */}
               Register
             </Button>
           </form>
 
-          <span className="flex justify-center text-sm text-gray-600 mt-3 dark:text-gray-400">
+          <span className="flex justify-center text-sm text-gray-600 mt-3">
             Already have an account?
-            <Link to="/login" className="text-blue-700 dark:text-emerald-500"> Log in</Link>
+            <Link to="/login" className="text-blue-700"> Log in</Link>
           </span>
         </div>
 
