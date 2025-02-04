@@ -2,6 +2,7 @@ import { Expense } from "../models/expense.model.js";
 export const addExpense = async (req, resp) => {
     try {
         const { type, category, amount, date, description, paymentMethod } = req.body;
+
         const userId = req.userId;
         console.log(req.body);
         if (!category || !amount || !date || !description || !paymentMethod) {
@@ -38,6 +39,8 @@ export const addExpense = async (req, resp) => {
 export const getExpenseByUserId = async (req, resp) => {
     try {
         const userId = req.userId;
+        console.log(userId);
+
         if (!userId) {
             return resp.status(400).json({
                 message: "User ID is required",
@@ -46,7 +49,7 @@ export const getExpenseByUserId = async (req, resp) => {
         }
         const expense = await Expense.find({ created_by: userId });
         if (!expense || expense.length === 0) {
-            return resp.status(404).json({
+            return resp.streatus(404).json({
                 message: "No expense records found for this user",
                 success: false,
             });
@@ -121,19 +124,22 @@ export const deleteExpense = async (req, resp) => {
 
 export const calculateTotalExpense = async (req, resp) => {
     try {
-        const userIds = await Expense.find();
-        if (!userIds || userIds.length === 0) {
+        const userId = req.userId;
+        // console.log(userId);
+
+        const userExpenses = await Expense.find({ created_by: userId });
+        if (!userExpenses || userExpenses.length === 0) {
             return resp.status(404).json({
-                message: "No income found",
+                message: "No expense found",
                 success: false
             });
         }
-        const totalExpense = userIds.reduce((sum, user) => sum + (user.amount || 0), 0)
+        const totalExpense = userExpenses.reduce((sum, expense) => sum + (expense.amount || 0), 0);
         return resp.status(200).json({
             message: "Total Expense calculated successfully",
             totalExpense,
             success: true
-        })
+        });
     } catch (error) {
         console.log(error);
         return resp.status(500).json({
@@ -142,5 +148,6 @@ export const calculateTotalExpense = async (req, resp) => {
         });
     }
 }
+
 
 

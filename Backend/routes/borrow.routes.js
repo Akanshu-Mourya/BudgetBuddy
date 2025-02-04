@@ -1,6 +1,10 @@
 import express from "express";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
-import { addBorrow } from "../controller/borrow.controller.js";
+import { addBorrow, borrowDelete, calculateTotalBorrow, getBorrowByID, updateBorrow } from "../controller/borrow.controller.js";
 const router = express.Router();
 router.route("/addBorrow").post(isAuthenticated, addBorrow);
+router.route("/getBorrow").get(isAuthenticated, getBorrowByID);
+router.route("/updateBorrow/:id").put(isAuthenticated, updateBorrow);
+router.route("/deleteBorrow/:id").delete(isAuthenticated, borrowDelete);
+router.route("/getTotal").get(isAuthenticated, calculateTotalBorrow);
 export default router;

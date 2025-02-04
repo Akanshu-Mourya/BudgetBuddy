@@ -30,10 +30,7 @@ const borrowSchema = new mongoose.Schema({
         required: true
     },
     // Interest rate in percentage
-    // borrowDate: {
-    //     type: Date,
-    //     default: Date.now
-    // },
+   
     dueDate: {
         type: Date,
         required: true
@@ -48,7 +45,7 @@ const borrowSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["borrowed", "paid"],
+        enum: ["borrowed", "partially paid", "paid", "overdue"],
         default: "borrowed"
     },
 }, { timestamps: true });

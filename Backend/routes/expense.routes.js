@@ -4,7 +4,7 @@ import { addExpense, getExpenseByUserId, updateExpense, deleteExpense, calculate
 
 const router = express.Router();
 router.route("/addExpense").post(isAuthenticated, addExpense);
-router.route("/getExpense/:id").get(isAuthenticated, getExpenseByUserId);
+router.route("/getExpense").get(isAuthenticated, getExpenseByUserId);
 router.route("/updateExpense/:id").put(isAuthenticated, updateExpense);
 router.route("/deleteExpense/:id").delete(isAuthenticated, deleteExpense);
 router.route("/getTotal").get(isAuthenticated, calculateTotalExpense)

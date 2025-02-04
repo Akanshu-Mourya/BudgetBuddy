@@ -8,6 +8,10 @@ const expenseSchema = new mongoose.Schema(
             required: true,
             unique: true,
             default: uuidv4,
+        }, created_by: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'User',
         },
         type: {
             type: String,
@@ -35,11 +39,7 @@ const expenseSchema = new mongoose.Schema(
             enum: ['cash', 'bank', 'other'],
             default: 'other',
         },
-        created_by: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: 'User',
-        },
+
     },
     {
         timestamps: true,

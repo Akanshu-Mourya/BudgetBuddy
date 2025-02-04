@@ -8,6 +8,11 @@ const incomeSchema = new mongoose.Schema({
         unique: true,
         default: uuidv4,
     },
+    created_by: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
     type: {
         type: String,
         required: true,
@@ -33,12 +38,7 @@ const incomeSchema = new mongoose.Schema({
         type: String,
         enum: ['cash', 'bank', 'other'],
         default: 'other',
-    },
-    created_by: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
+    }
 }, { timestamps: true });
 
 // incomeSchema.pre("save", async function (next) {
