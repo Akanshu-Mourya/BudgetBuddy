@@ -7,12 +7,36 @@ import { cn } from "@/lib/utils";
 import { MdAttachMoney } from "react-icons/md";
 import { SidebarAccordion, SidebarElement } from "./SidebarAccordion";
 import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
+import { useDispatch } from "react-redux";
+import { USER_API_END_POINT } from "@/utils/constant";
+import { toast } from "sonner";
+import { setUser } from "@/redux/authSlice";
+import axios from "axios";
 
 const sidebardarktheme = ' dark:bg-gray-900 text-white';
 
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false);
+
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const logoutHandler = async () => {
+        try {
+            const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
+            if (res.data.success) {
+                dispatch(setUser(null));
+                navigate('/');
+                toast.success(res.data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response?.data?.message || 'An error occurred');
+        }
+    };
+
     const Effact = 'flex  items-center gap-5 p-1 rounded-md hover:bg-[#257c8a] hover:text-white transition ';
     const AccordionEffact = 'px-10 text-[17px] flex  items-center  p-1 rounded-md hover:bg-gray-300  hover:text-black transition ';
     return (
@@ -141,10 +165,11 @@ const Sidebar = () => {
                     <SidebarElement
                         title="Logout"
                         effectClass={Effact}
+
                         icon={LogOut}
                         links={[
                             {
-                                path: "/dashboard/logout",
+                                onClick: logoutHandler,
                             }
                         ]}
 
@@ -157,9 +182,9 @@ const Sidebar = () => {
             {/* Desktop Sidebar */}
             <aside className={cn(` dark:bg-gray-800 hidden md:flex flex-col bg-gray-100 h-screen   p-9 transition-all`, collapsed ? "w-28" : "w-72")}>
                 <div className="flex gap-3">
-                    <button onClick={() => setCollapsed(!collapsed)} className="p-2 self-end rounded-md bg-[#257c8a] text-white">
+                    {/* <button onClick={() => setCollapsed(!collapsed)} className="p-2 self-end rounded-md bg-[#257c8a] text-white">
                         <Menu size={24} />
-                    </button>
+                    </button> */}
                     {!collapsed && (
                         <h1 className='text-2xl font-bold transition duration-100'>
                             Budget
@@ -288,7 +313,7 @@ const Sidebar = () => {
                         icon={LogOut}
                         links={[
                             {
-                                path: "/dashboard/logout",
+                                onClick: logoutHandler,
                             }
                         ]}
 

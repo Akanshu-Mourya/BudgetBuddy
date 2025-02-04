@@ -30,9 +30,7 @@ const Navbar = () => {
 
         {/* Logo and Name */}
         <div className='flex items-center gap-3'>
-          <div className='h-20 w-20 rounded-full overflow-hidden'>
-            <img src="/images/BudgetBuddyLogo.jpg" alt="Logo" className="h-full w-full object-cover" />
-          </div>
+        
           <h1 className='text-2xl font-bold dark:text-white'>
             Budget
             <span className='text-[#2a8e9e] hover:text-[#257c8a] cursor-pointer transition duration-300'>

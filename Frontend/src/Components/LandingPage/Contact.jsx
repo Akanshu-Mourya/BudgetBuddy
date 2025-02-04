@@ -1,4 +1,5 @@
 import React from 'react';
+import { darkThemeColor } from '../DarkLiteMood/ThemeProvider';
 
 const Contact = () => {
   const labelStyleClass = 'block text-sm font-medium text-gray-700';

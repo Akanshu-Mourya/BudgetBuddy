@@ -4,7 +4,7 @@ import { darkThemeColor } from '../DarkLiteMood/ThemeProvider';
 
 const Footer = () => {
   return (
-    <footer className={`${darkThemeColor}  bg-white text-black py-8`}>
+    <footer className={` dark:bg-gray-900 dark:text-white  bg-white text-black py-8`}>
       <div className="container mx-auto px-6 lg:px-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About Section */}
