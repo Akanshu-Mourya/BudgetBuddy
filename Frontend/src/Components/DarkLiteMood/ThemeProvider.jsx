@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-  
+
 export const darkThemeColor = 'dark:bg-gray-700 dark:text-gray-300';
 
 
@@ -47,3 +47,26 @@ export const useTheme = () => {
   if (!context) throw new Error("useTheme must be used within a ThemeProvider");
   return context;
 };
+
+
+
+
+export const HandleMessageUISuccess = () => {
+  return {
+    duration: 4000,
+    icon: "✅", // Optional icon
+    theme: "dark", // Use dark theme for toast
+    position: "bottom-right", // Position where toast appears
+    style: { backgroundColor: "#257c8a", color: "#fff" }
+  };
+};
+
+export const HandleMessageUIError=()=>{
+  return{
+    duration: 4000,
+    icon: "❌",
+    theme: "dark",
+    position: "buttom-right",
+    style: { backgroundColor: "#257c8a", color: "#fff" } 
+  }
+}

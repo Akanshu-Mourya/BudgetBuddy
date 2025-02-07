@@ -1,10 +1,8 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import validator from 'validator';
-// import { OAuth2Client } from "google-auth-library";
-import{OAuth2Client} from 'google-auth-library';
-
+import validator from "validator";
+import { OAuth2Client } from "google-auth-library";
 
 export const register = async (req, resp) => {
     try {
@@ -19,13 +17,29 @@ export const register = async (req, resp) => {
             });
         }
 
-        // Handle Google User Registration
-        if (isGoogleUser) {
-            const existingGoogleUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ email });
 
-            if (existingGoogleUser) {
+        // Handle Google User Registration
+        if (isGoogleUser===true) {
+            if (!googleSub) {
+                return resp.status(400).json({
+                    message: "Google user must have a Google Sub ID",
+                    success: false,
+                });
+            }
+
+            // If user exists but is not a Google user
+            if (existingUser && !existingUser.isGoogleUser) {
                 return resp.status(409).json({
-                    message: "Google user already exists with this email",
+                    message: "User already exists with this email. Please log in with a password.",
+                    success: false,
+                });
+            }
+
+            // If user already exists with Google account
+            if (existingUser && existingUser.isGoogleUser) {
+                return resp.status(409).json({
+                    message: "Google user already exists",
                     success: false,
                 });
             }
@@ -34,8 +48,10 @@ export const register = async (req, resp) => {
             await User.create({
                 fullName,
                 email,
-                googleSub, // Google unique identifier (sub)
+                googleSub,
                 isGoogleUser: true,
+                phoneNumber: undefined,
+                password: undefined,
             });
 
             return resp.status(201).json({
@@ -47,7 +63,7 @@ export const register = async (req, resp) => {
         // Handle Traditional Registration
         if (!fullName || !phoneNumber || !password) {
             return resp.status(400).json({
-                message: "All fields are required for traditional signup",
+                message: "All fields are required",
                 success: false,
             });
         }
@@ -60,7 +76,6 @@ export const register = async (req, resp) => {
             });
         }
 
-        const existingUser = await User.findOne({ email });
         if (existingUser) {
             return resp.status(409).json({
                 message: "User already exists with this email",
@@ -74,6 +89,8 @@ export const register = async (req, resp) => {
             email,
             phoneNumber,
             password: hashedPassword,
+            googleSub: undefined,
+            isGoogleUser: false,
         });
 
         return resp.status(201).json({
@@ -88,6 +105,7 @@ export const register = async (req, resp) => {
         });
     }
 };
+;
 
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);

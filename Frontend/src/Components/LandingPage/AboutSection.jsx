@@ -6,7 +6,7 @@ const AboutSection = () => {
     <div id="about-section" className= {`${darkThemeColor} bg-gray-50  py-20 px-4 sm:px-8 lg:px-16`}>
       <div className="container mx-auto max-w-6xl text-center"id='about'>
         <h2 className= {`${darkThemeColor} text-4xl font-extrabold text-gray-800 mb-6`}>
-          About Budget<span className="text-[#2a8e9e]">Buddy</span>
+          About Budget<span className="text-[#2a8e9e] hover:text-[#257c8a] cursor-pointer">Buddy</span>
         </h2>
         <p className={`${darkThemeColor} text-lg text-gray-700 leading-relaxed mb-12`}>
           BudgetBuddy is your ultimate companion for financial success.

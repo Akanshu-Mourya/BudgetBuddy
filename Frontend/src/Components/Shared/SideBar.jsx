@@ -1,17 +1,20 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { Home, Briefcase, Settings, Menu, BarChart, FileText, Tag, LogOut } from "lucide-react";
-import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
+import { Home, Briefcase, Settings, Menu, BarChart, FileText, Tag, LogOut, IndianRupeeIcon } from "lucide-react";
+import { FaWallet } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { MdAttachMoney } from "react-icons/md";
+import { IndianRupee } from "lucide-react";
+
 import { SidebarAccordion, SidebarElement } from "./SidebarAccordion";
-import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
+// import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
 import { useDispatch } from "react-redux";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { setUser } from "@/redux/authSlice";
 import axios from "axios";
+import { HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
 
 const sidebardarktheme = ' dark:bg-gray-900 text-white';
 
@@ -29,11 +32,11 @@ const Sidebar = () => {
             if (res.data.success) {
                 dispatch(setUser(null));
                 navigate('/');
-                toast.success(res.data.message);
+                toast.success(res.data.message, HandleMessageUISuccess());
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response?.data?.message || 'An error occurred');
+            toast.error(error.response?.data?.message || 'An error occurred', HandleMessageUIError());
         }
     };
 
@@ -59,122 +62,117 @@ const Sidebar = () => {
                         </h1>
                     </div>
                     <nav className="space-y-2 text-xl flex-grow">
-                       
-                    <SidebarElement
-                        title="Dashboard"
-                        effectClass={Effact}
-                        icon={Home}
-                        links={[
-                            {
-                                path: "/dashboard",
-                            }
-                        ]}
 
-                    />
-                    <SidebarAccordion
-                        title="Income"
-                        icon={MdAttachMoney}
-                        effectClass={Effact}
-                        accordionEffact={AccordionEffact}
-                        links={[
-                            { path: "/dashboard/income", label: "Add Income"  },
-                            { path: "/dashboard/income/get", label: "Get Income" },
-                            { path: "/dashboard/income/update", label: "Update Income" },
-                            { path: "/dashboard/income/delete", label: "Delete Income" }
+                        <SidebarElement
+                            title="Dashboard"
+                            effectClass={Effact}
+                            icon={Home}
+                            links={[
+                                {
+                                    path: "/dashboard",
+                                }
+                            ]}
 
-                        ]} />
-
-                    <SidebarAccordion
-                        title="Expense"
-                        icon={FaShoppingCart}
-                        effectClass={Effact}
-                        accordionEffact={AccordionEffact}
-                        links={[
-                            { path: "/dashboard/expense", label: "Add expense" },
-                            { path: "/dashboard/expense/get", label: "Get expense" },
-                            { path: "/dashboard/expense/update", label: "Update expense" },
-                            { path: "/dashboard/expense/delete", label: "Delete expense" }
-
-                        ]}
-
-                    />
-                    <SidebarAccordion
-                        title="Expense"
-                        icon={Briefcase}
-                        effectClass={Effact}
-                        accordionEffact={AccordionEffact}
-                        links={[
-                            { path: "/dashboard/debt", label: "Add debt" },
-                            { path: "/dashboard/debt/get", label: "Get debt" },
-                            { path: "/dashboard/debt/update", label: "Update debt" },
-                            { path: "/dashboard/debt/delete", label: "Delete debt" }
-
-                        ]}
-
-                    />
+                        />
+                        <SidebarAccordion
+                            title="Income"
+                            icon={IndianRupeeIcon}
+                            effectClass={Effact}
+                            accordionEffact={AccordionEffact}
+                            links={[
+                                { path: "/dashboard/income/create", label: "Add New Income" },
+                                { path: "/dashboard/income/list", label: "View Income" }
 
 
-                    <SidebarElement
-                        title="Reports"
-                        effectClass={Effact}
-                        icon={FileText}
-                        links={[
-                            {
-                                path: "/dashboard/reports",
-                            }
-                        ]}
+                            ]} />
 
-                    />
-                    <SidebarElement
-                        title="Categories"
-                        effectClass={Effact}
-                        icon={Tag}
-                        links={[
-                            {
-                                path: "/dashboard/categories",
-                            }
-                        ]}
+                        <SidebarAccordion
+                            title="Expense"
+                            icon={FaWallet}
+                            effectClass={Effact}
+                            accordionEffact={AccordionEffact}
+                            links={[
+                                { path: "/dashboard/expense/create", label: "Add New Expense" },
+                                { path: "/dashboard/expense/get", label: "View Expenses" },
 
-                    />
-                    <SidebarElement
-                        title="Analytics"
-                        effectClass={Effact}
-                        icon={BarChart}
-                        links={[
-                            {
-                                path: "/dashboard/analytics",
-                            }
-                        ]}
+                            ]}
 
-                    />
+                        />
+                        <SidebarAccordion
+                            title="Expense"
+                            icon={Briefcase}
+                            effectClass={Effact}
+                            accordionEffact={AccordionEffact}
+                            links={[
+                                { path: "/dashboard/Liabilities", label: "Add Liabilities" },
+                                { path: "/dashboard/Liabilities/get", label: "Liabilities History" },
+
+                            ]}
+
+                        />
+
+
+                        <SidebarElement
+                            title="Reports"
+                            effectClass={Effact}
+                            icon={FileText}
+                            links={[
+                                {
+                                    path: "/dashboard/reports",
+                                }
+                            ]}
+
+                        />
+                        <SidebarElement
+                            title="Categories"
+                            effectClass={Effact}
+                            icon={Tag}
+                            links={[
+                                {
+                                    path: "/dashboard/categories",
+                                }
+                            ]}
+
+                        />
+                        <SidebarElement
+                            title="Analytics"
+                            effectClass={Effact}
+                            icon={BarChart}
+                            links={[
+                                {
+                                    path: "/dashboard/analytics",
+                                }
+                            ]}
+
+                        />
                     </nav>
 
                     {/* Move Settings and Logout to the bottom */}
                     <div className="mt-auto space-y-2 text-xl">
-                    <SidebarElement
-                        title="Settings"
-                        effectClass={Effact}
-                        icon={Settings}
-                        links={[
-                            {
-                                path: "/dashboard/settings",
-                            }
-                        ]}
+                        {/* <SidebarElement
+                            title="Settings"
+                            effectClass={Effact}
+                            icon={Settings}
+                            links={[
+                                {
+                                    path: "/dashboard/settings",
+                                }
+                            ]}
 
-                    />
-                    <SidebarElement
-                        title="Logout"
-                        effectClass={Effact}
+                        /> */}
+                        <SidebarElement
+                            title="Logout"
+                            effectClass={Effact}
 
-                        icon={LogOut}
-                        links={[
-                            {
-                                onClick: logoutHandler,
-                            }
-                        ]}
+                            icon={LogOut}
+                            links={[
+                                {
+                                    onClick: logoutHandler,
+                                }
+                            ]}
 
-                    />
-                      
+                        />
+
                     </div>
                 </SheetContent>
             </Sheet>
@@ -192,7 +190,7 @@ const Sidebar = () => {
                                 Buddy
                             </span>
                         </h1>
-                        
+
                     )}
                 </div>
                 <nav className="mt-4 space-y-4 text-xl">
@@ -209,44 +207,39 @@ const Sidebar = () => {
                     />
                     <SidebarAccordion
                         title="Income"
-                        icon={MdAttachMoney}
+                        icon={IndianRupeeIcon}
                         collapsed={collapsed}
                         effectClass={Effact}
                         accordionEffact={AccordionEffact}
                         links={[
-                            { path: "/dashboard/income", label: "Add Income" },
-                            { path: "/dashboard/income/get", label: "Get Income" },
-                            { path: "/dashboard/income/update", label: "Update Income" },
-                            { path: "/dashboard/income/delete", label: "Delete Income" }
+                            { path: "/dashboard/income/create", label: "Add New Income" },
+                            { path: "/dashboard/income/list", label: "View Incomes" }
+
 
                         ]} />
 
                     <SidebarAccordion
                         title="Expense"
-                        icon={FaShoppingCart}
+                        icon={FaWallet}
                         collapsed={collapsed}
                         effectClass={Effact}
                         accordionEffact={AccordionEffact}
                         links={[
-                            { path: "/dashboard/expense", label: "Add expense" },
-                            { path: "/dashboard/expense/get", label: "Get expense" },
-                            { path: "/dashboard/expense/update", label: "Update expense" },
-                            { path: "/dashboard/expense/delete", label: "Delete expense" }
+                            { path: "/dashboard/expense/create", label: "Add New Expense" },
+                            { path: "/dashboard/expense/get", label: "View Expenses" },
 
                         ]}
 
                     />
                     <SidebarAccordion
-                        title="Expense"
+                        title="Liabilities"
                         icon={Briefcase}
                         collapsed={collapsed}
                         effectClass={Effact}
                         accordionEffact={AccordionEffact}
                         links={[
-                            { path: "/dashboard/debt", label: "Add debt" },
-                            { path: "/dashboard/debt/get", label: "Get debt" },
-                            { path: "/dashboard/debt/update", label: "Update debt" },
-                            { path: "/dashboard/debt/delete", label: "Delete debt" }
+                            { path: "/dashboard/Liabilities", label: "Add Liabilities" },
+                            { path: "/dashboard/Liabilities/get", label: "Liabilities History" },
 
                         ]}
 
@@ -293,8 +286,8 @@ const Sidebar = () => {
 
                 </nav>
                 <nav className="mt-auto space-y-2 text-xl">
-                  
-                <SidebarElement
+
+                    {/* <SidebarElement
                         title="Settings"
                         collapsed={collapsed}
                         effectClass={Effact}
@@ -305,7 +298,7 @@ const Sidebar = () => {
                             }
                         ]}
 
-                    />
+                    /> */}
                     <SidebarElement
                         title="Logout"
                         collapsed={collapsed}
@@ -319,8 +312,8 @@ const Sidebar = () => {
 
                     />
 
-                    
-                    
+
+
                 </nav>
             </aside>
         </div>

@@ -42,7 +42,7 @@ const Navbar = () => {
 
         {/* Navbar Links - Hidden in Mobile */}
         <div className={` md:block flex-grow justify-center  ${isMobileMenuOpen ? 'block' : 'hidden'} lg:flex  mt-280 md:mt-0  `}  >
-          <ul className={`flex justify-center items-center flex-col font-medium md:flex-row lg:gap-10 md:gap-15 gap-2 `}>
+          <ul className={`flex justify-center items-center flex-col font-medium text-xl md:flex-row lg:gap-10 md:gap-15 gap-2 `}>
             <li>
               <NavbarLinks
                 title="Home"
@@ -227,4 +227,3 @@ const NavbarLinks = ({ title, StyleNavLink, links, offsets }) => {
     ))
   )
 }
-

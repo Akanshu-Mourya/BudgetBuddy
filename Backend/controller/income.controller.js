@@ -2,7 +2,7 @@ import { Income } from '../models/income.models.js';
 
 export const addIncome = async (req, resp) => {
     try {
-        const { type, category, amount, date, description, paymentMethod } = req.body;
+        const { category, amount, date, description, paymentMethod } = req.body;
         const userId = req.userId;
 
         if (!category || !amount || !date || !description || !paymentMethod) {
@@ -13,8 +13,6 @@ export const addIncome = async (req, resp) => {
         }
 
         const income = await Income.create({
-            // transactionId,
-            type,
             category,
             amount,
             date,

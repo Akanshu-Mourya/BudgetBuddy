@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema(
         googleSub: {
             type: String,
             unique: true,
+            sparse: true, // 👈 Fix: Allows multiple `null` values
         },
     },
     { timestamps: true }

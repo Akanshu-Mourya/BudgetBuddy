@@ -23,8 +23,8 @@ const Contact = () => {
         </p>
 
         {/* Form Centered */}
-        <div className="grid grid-cols-1 md:grid-cols-2  " >
-          <form className="bg-gray-100 rounded-lg p-8 shadow-lg w-full max-w-lg  ">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center" >
+          <form className=" bg-gray-100 rounded-lg p-8 shadow-lg w-full max-w-lg  ">
             {/* ✅ Using map() to Generate Form Fields */}
             {formFields.map((field, index) => (
               <FormField
@@ -48,18 +48,7 @@ const Contact = () => {
 
           {/* Contact Information */}
           <div className="flex flex-col justify-center items-center text-center md:text-left">
-            <p className="text-gray-600 mb-4">
-              <strong>Email:</strong> support@budgetbuddy.com
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>Phone:</strong> +91 9090909090
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>Address:</strong> India
-            </p>
-            <p className="text-gray-600">
-              We're here to help you with any inquiries or concerns.
-            </p>
+            <img src="/images/Contact.png" alt="" className='w-128' />
           </div>
         </div>
       </div>

@@ -4,12 +4,14 @@ import { darkThemeColor } from '../DarkLiteMood/ThemeProvider';
 
 const Footer = () => {
   return (
-    <footer className={` dark:bg-gray-900 dark:text-white  bg-white text-black py-8`}>
+    <footer className={` dark:bg-gray-900 dark:text-white  bg-[#14515a] text-gray-300  py-8`}>
       <div className="container mx-auto px-6 lg:px-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About Section */}
           <div>
-            <h3 className="text-lg font-bold mb-4">About BudgetBuddy</h3>
+            <h3 className="text-lg font-bold mb-4">About Budget
+              
+            <span className="text-[#2a8e9e] hover:text-[#257c8a] cursor-pointer">Buddy</span></h3>
             <p className="text-sm">
               BudgetBuddy helps you manage your finances effectively with
               features like expense tracking, savings goals, and financial

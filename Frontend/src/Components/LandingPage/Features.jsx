@@ -30,7 +30,7 @@ const Features = () => {
         <div id="features-section" className={`${darkThemeColor }  bg-gray-50 py-20 `}>
             <div className="container mx-auto px-10" id='features'>
                 <h2 className={`dark:text-gray-300 text-4xl font-extrabold text-gray-800 text-center mb-10 `}>
-                    Why Choose Budget<span className="text-[#2a8e9e]">Buddy</span>
+                    Why Choose Budget<span className="text-[#2a8e9e] hover:text-[#257c8a] cursor-pointer">Buddy</span>
                 </h2>
                 <p className= {`  dark:text-gray-300 text-lg text-gray-600 text-center mb-16`}>
                     Explore the powerful features designed to help you manage your finances better.

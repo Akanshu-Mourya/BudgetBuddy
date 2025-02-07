@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FaEye, FaEyeSlash, FaFacebook, FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
 import { REACT_APP_GOOGLE_CLIENT_ID, USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
+import { darkThemeColor, HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
 
 const SignUp = () => {
   const [input, setInput] = useState({
@@ -78,20 +77,27 @@ const SignUp = () => {
       formData.append("email", input.email);
       formData.append("phoneNumber", input.phoneNumber);
       formData.append("password", input.password);
-      // formData.append("isGoogleUser", false); // Add flag for regular registration
+      formData.append("isGoogleUser", false); // Add flag for regular registration
+      // console.log(formData);
 
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+
+      }
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
 
       if (res.data.success) {
-        toast.success(res.data.message);
+        toast.success(res.data.message, HandleMessageUISuccess());
         navigate("/dashboard");
       }
     } catch (error) {
+      console.log();
+
       console.error("Network Error:", error);
-      toast.error(error?.response?.data?.message || "An error occurred");
+      toast.error(error?.response?.data?.message || "An error occurred", HandleMessageUIError());
     } finally {
       dispatch(setLoading(false));
     }
@@ -111,18 +117,18 @@ const SignUp = () => {
       });
 
       if (res.data.success) {
-        toast.success("Google registration successful!");
+        toast.success("Google registration successful!", HandleMessageUISuccess());
         navigate("/dashboard");
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Google registration failed");
+      toast.error(error?.response?.data?.message || "Google registration failed", HandleMessageUIError());
     }
   };
 
   // Handle Google login error
   const handleGoogleError = (error) => {
     console.log("Google Login Error", error);
-    toast.error("Google login failed");
+    toast.error("Google login failed",HandleMessageUIError());
   };
 
   useEffect(() => {
@@ -150,7 +156,7 @@ const SignUp = () => {
             </Button>
 
           </div>
-          <p className="text-center text-gray-500 font-bold text-sm mt-6">
+          <p className="text-center dark:text-gray-300 text-gray-500 font-bold text-sm mt-6">
             or register with your email
           </p>
           {/* Email/Password Form */}
@@ -222,9 +228,9 @@ const SignUp = () => {
             </Button>
           </form>
 
-          <span className="flex justify-center text-sm text-gray-600 mt-3">
+          <span className="flex justify-center text-sm dark:text-gray-300 text-gray-600 mt-3 gap-2">
             Already have an account?
-            <Link to="/login" className="text-blue-700"> Log in</Link>
+            <Link to="/login" className="text-[#2a99aa]  font-bold"> Log in</Link>
           </span>
         </div>
 

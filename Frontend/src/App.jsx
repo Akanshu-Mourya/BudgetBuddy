@@ -3,10 +3,9 @@ import Home from './Components/LandingPage/Home';
 import { RouterProvider } from 'react-router';
 import Login from './Components/Auth/Login';
 import SignUp from './Components/auth/SignUp.jsx';
-import Sidebar from './Components/Shared/SideBar';
 import DeshBord from './Components/Dashboard/DeshBord';
 import { ThemeProvider } from './Components/DarkLiteMood/ThemeProvider';
-import AddIncome from './Components/Dashboard/AddIncome';
+import Expense from './Components/Dashboard/Expense';
 // import Google from './Components/Auth/google.jsx';
 const appRouter = createBrowserRouter([
   {
@@ -25,17 +24,21 @@ const appRouter = createBrowserRouter([
     path: '/dashboard',
     element: <DeshBord />
   },
-  {
-    path: '/dashboard/income',
-    element: <AddIncome/>
+  // {
+  //   path: '/dashboard/income',
+  //   element: <AddIncome/>
+  // }
+  , {
+    path: '/dashboard/expense/create',
+    element: <Expense />
   }
 ]);
 
 function App() {
   return (
     <main>
-    <ThemeProvider>
-      <RouterProvider router={appRouter} />
+      <ThemeProvider>
+        <RouterProvider router={appRouter} />
       </ThemeProvider>
     </main>
   );

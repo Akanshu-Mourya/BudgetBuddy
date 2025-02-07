@@ -10,7 +10,7 @@ const HeroSection = () => {
                 <section className= {`m-5 p-8  md:w-fit ` }>
                     <h1 className={`text-4xl font-extrabold text-gray-800 leading-tight dark:text-white sm:text-6xl `}>
                         Simplify Your Budgeting with Budget
-                        <span className="text-[#2a8e9e] hover:text-[#257c8a] cursor-pointer transition duration-300">
+                        <span className="text-[#2a8e9e] hover:text-[#257c8a] transition duration-300 cursor-pointer">
                             Buddy
                         </span>
                     </h1>
@@ -48,7 +48,7 @@ const HeroSection = () => {
                                     </svg>
                                 ))}
                             </div>
-                            <p className="text-gray-600 text-sm">
+                            <p className="dark:text-gray-300 text-gray-600 text-sm">
                                 4.8 from <span className="font-semibold">500+ reviews</span>
                             </p>
                             <div className="flex -space-x-2">
