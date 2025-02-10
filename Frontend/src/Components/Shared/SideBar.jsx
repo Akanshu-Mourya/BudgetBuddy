@@ -13,7 +13,6 @@ import { toast } from "sonner";
 import { setUser } from "@/redux/authSlice";
 import axios from "axios";
 
-const sidebardarktheme = ' dark:bg-gray-900 text-white';
 
 
 const Sidebar = () => {
@@ -42,14 +41,14 @@ const Sidebar = () => {
     return (
         <div className={`flex `}>
             {/* Mobile Sidebar */}
-            <Sheet>
+            <Sheet >
                 <SheetTrigger asChild>
                     <button className={`p-2 md:hidden bg-[#257c8a]  text-white `}>
                         <Menu size={24} />
                     </button>
                 </SheetTrigger>
 
-                <SheetContent side="left" className="text-black bg-white h-full flex flex-col ">
+                <SheetContent side="left" className={`${darkThemeColor} text-black bg-white h-full flex flex-col  7`}>
                     <div className="flex gap-3 p-2">
                         <h1 className='text-2xl font-bold'>
                             Budget
@@ -85,7 +84,7 @@ const Sidebar = () => {
                         ]} />
 
                     <SidebarAccordion
-                        title="Expense"
+                        title="vivek"
                         icon={FaShoppingCart}
                         effectClass={Effact}
                         accordionEffact={AccordionEffact}
@@ -99,7 +98,7 @@ const Sidebar = () => {
 
                     />
                     <SidebarAccordion
-                        title="Expense"
+                        title="Debt"
                         icon={Briefcase}
                         effectClass={Effact}
                         accordionEffact={AccordionEffact}
@@ -165,7 +164,6 @@ const Sidebar = () => {
                     <SidebarElement
                         title="Logout"
                         effectClass={Effact}
-
                         icon={LogOut}
                         links={[
                             {
@@ -237,7 +235,7 @@ const Sidebar = () => {
 
                     />
                     <SidebarAccordion
-                        title="Expense"
+                        title="Debt"
                         icon={Briefcase}
                         collapsed={collapsed}
                         effectClass={Effact}

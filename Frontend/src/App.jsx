@@ -6,7 +6,8 @@ import SignUp from './Components/auth/SignUp.jsx';
 import Sidebar from './Components/Shared/SideBar';
 import DeshBord from './Components/Dashboard/DeshBord';
 import { ThemeProvider } from './Components/DarkLiteMood/ThemeProvider';
-import AddIncome from './Components/Dashboard/AddIncome';
+import { AddIncome } from './Components/Dashboard/AddIncome';
+import { AddExpance } from './Components/Dashboard/AddExpance';
 // import Google from './Components/Auth/google.jsx';
 const appRouter = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const appRouter = createBrowserRouter([
   {
     path: '/dashboard/income',
     element: <AddIncome/>
+  },
+  {
+    path: '/dashboard/expense',
+    element: <AddExpance/>
   }
 ]);
 

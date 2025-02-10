@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -73,14 +74,14 @@ const Login = () => {
     }, [user, navigate]);
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 sm:px-6">
-            <Card className="w-full max-w-4xl flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-lg bg-white">
+        <div className={`${darkThemeColor} flex min-h-screen items-center justify-center bg-gray-100 px-4 sm:px-6`}>
+            <Card className={`${darkThemeColor} w-full max-w-4xl flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-2xl dark:shadow-gray-900 dark:hover:shadow-gray-950 bg-white`}>
                 {/* Left Section */}
                 <div className="w-full md:w-1/2 p-6 md:p-10">
-                    <h1 className="text-xl md:text-2xl font-semibold text-gray-800">
+                    <h1 className={`${darkThemeColor} text-xl md:text-2xl font-semibold text-gray-800`}>
                         Log in to your Account
                     </h1>
-                    <p className="text-sm md:text-base text-gray-600 mt-2">
+                    <p className="text-sm md:text-base text-gray-600 mt-2  dark:text-gray-400">
                         Welcome back! Choose a login method
                     </p>
 
@@ -93,7 +94,7 @@ const Login = () => {
 
                     </div>
 
-                    <p className="text-center text-gray-500 font-bold text-sm mt-6">
+                    <p className="text-center text-gray-500 font-bold text-sm mt-6 dark:text-gray-400">
                         or log in with your email
                     </p>
 
@@ -126,11 +127,11 @@ const Login = () => {
                         </div>
 
                         <div className="flex items-center justify-between">
-                            <label className="flex items-center gap-2 text-sm md:text-base text-gray-600">
+                            <label className={`${darkThemeColor} flex items-center gap-2 text-sm md:text-base text-gray-600 `}>
                                 <Checkbox />
                                 Remember me
                             </label>
-                            <a href="#" className="text-sm text-blue-600 hover:underline">
+                            <a href="#" className="text-sm text-blue-600 hover:underline   dark:text-gray-300">
                                 Forgot Password?
                             </a>
                         </div>
@@ -153,9 +154,9 @@ const Login = () => {
                     </form>
 
                     {/* Signup Link */}
-                    <p className="text-center text-sm text-gray-600 mt-3">
+                    <p className="text-center text-sm text-gray-600 mt-3 dark:text-gray-400">
                         Don’t have an account?{" "}
-                        <Link to="/register" className="text-blue-600 hover:underline">
+                        <Link to="/register" className="text-blue-600 hover:underline dark:text-gray-300">
                             Register
                         </Link>
                     </p>

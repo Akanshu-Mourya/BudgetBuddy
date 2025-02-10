@@ -150,7 +150,7 @@ const SignUp = () => {
             </Button>
 
           </div>
-          <p className="text-center text-gray-500 font-bold text-sm mt-6">
+          <p className="text-center text-gray-500 font-bold text-sm mt-6 dark:text-gray-400">
             or register with your email
           </p>
           {/* Email/Password Form */}
@@ -222,9 +222,9 @@ const SignUp = () => {
             </Button>
           </form>
 
-          <span className="flex justify-center text-sm text-gray-600 mt-3">
+          <span className="flex justify-center text-sm text-gray-600 mt-3 dark:text-gray-400">
             Already have an account?
-            <Link to="/login" className="text-blue-700"> Log in</Link>
+            <Link to="/login" className="text-blue-700 dark:text-gray-300"> Log in</Link>
           </span>
         </div>
 
