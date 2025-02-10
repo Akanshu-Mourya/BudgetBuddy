@@ -36,8 +36,8 @@ const incomeSchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String,
-        enum: ['cash', 'bank', 'other'],
-        default: 'other',
+        enum: ['Cash', 'Bank', 'Other'],
+        default: 'Other',
     }
 }, { timestamps: true });
 export const Income = mongoose.model('Income', incomeSchema);
