@@ -63,6 +63,7 @@ const SignUp = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const newErrors = validate();
+    
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;

@@ -61,12 +61,12 @@ export const HandleMessageUISuccess = () => {
   };
 };
 
-export const HandleMessageUIError=()=>{
-  return{
+export const HandleMessageUIError = () => {
+  return {
     duration: 4000,
     icon: "❌",
     theme: "dark",
     position: "buttom-right",
-    style: { backgroundColor: "#257c8a", color: "#fff" } 
+    style: { backgroundColor: "#257c8a", color: "#fff" }
   }
 }

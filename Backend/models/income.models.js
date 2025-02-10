@@ -40,16 +40,4 @@ const incomeSchema = new mongoose.Schema({
         default: 'other',
     }
 }, { timestamps: true });
-
-// incomeSchema.pre("save", async function (next) {
-//     if (!this.isNew) return next();
-//     try {
-//         const lastRecord = await mongoose.model('Income').findOne().sort({ transactionId: -1 });
-//         this.transactionId = lastRecord ? lastRecord.transactionId + 1 : 1;
-//         next();
-//     } catch (error) {
-//         next(error);
-//     }
-// });
-
 export const Income = mongoose.model('Income', incomeSchema);
