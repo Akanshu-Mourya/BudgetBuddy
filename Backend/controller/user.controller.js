@@ -212,21 +212,7 @@ export const login = async (req, resp) => {
 };
 
 
-// export const logout = async (req, resp) => {
-//     try {
-//         return resp.status(200).cookie("token", "", { maxAge: 0 }).json({
 
-//             message: "Logged out successfully.",
-//             success: true
-//         });
-//     } catch (error) {
-//         console.log(error);
-//         return resp.status(500).json({
-//             message: "Internal server error",
-//             success: false,
-//         });
-//     }
-// }
 
 // Edit Profile System aayega
 
