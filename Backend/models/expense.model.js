@@ -16,7 +16,7 @@ const expenseSchema = new mongoose.Schema(
         type: {
             type: String,
             required: true,
-            enum: ['income', 'expense'],
+            // enum: ['income', 'expense'],
             default: 'expense',
         },
         category: {
@@ -36,8 +36,9 @@ const expenseSchema = new mongoose.Schema(
         },
         paymentMethod: {
             type: String,
-            enum: ['cash', 'bank', 'other'],
-            default: 'other',
+            // enum: ['cash', 'bank', 'other'],
+            // default: 'other',
+            required: true
         },
 
     },

@@ -3,7 +3,7 @@ import isAuthenticated from "../middlewares/isAuthenticated.js";
 import { addIncome, incomeDelete, getIncomeByUserId, updateIncome, calculateTotalIncome } from "../controller/income.controller.js";
 
 const router = express.Router();
-router.route("/addIncome").post( addIncome);
+router.route("/addIncome").post( isAuthenticated,addIncome);
 router.route('/getIncome').get(isAuthenticated, getIncomeByUserId);
 router.route('/updateIncome/:id').put(isAuthenticated, updateIncome);
 router.route('/deleteIncome/:id').delete(isAuthenticated, incomeDelete);

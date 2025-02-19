@@ -27,17 +27,11 @@ const Sidebar = () => {
     const navigate = useNavigate();
 
     const logoutHandler = async () => {
-        try {
-            const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
-            if (res.data.success) {
-                dispatch(setUser(null));
-                navigate('/');
-                toast.success(res.data.message, HandleMessageUISuccess());
-            }
-        } catch (error) {
-            console.log(error);
-            toast.error(error.response?.data?.message || 'An error occurred', HandleMessageUIError());
-        }
+        localStorage.removeItem("token");
+        dispatch(setUser(null));
+        toast.success("Logged out successfully.", HandleMessageUISuccess());
+        navigate('/');
+
     };
 
     const Effact = 'flex  items-center gap-5 p-1 rounded-md hover:bg-[#257c8a] hover:text-white transition ';
@@ -104,7 +98,7 @@ const Sidebar = () => {
                             effectClass={Effact}
                             accordionEffact={AccordionEffact}
                             links={[
-                                { path: "/dashboard/Liabilities", label: "Add Liabilities" },
+                                { path: "/dashboard/Liabilities/create", label: "Add Liabilities" },
                                 { path: "/dashboard/Liabilities/get", label: "Liabilities History" },
 
                             ]}
@@ -238,7 +232,7 @@ const Sidebar = () => {
                         effectClass={Effact}
                         accordionEffact={AccordionEffact}
                         links={[
-                            { path: "/dashboard/Liabilities", label: "Add Liabilities" },
+                            { path: "/dashboard/Liabilities/create", label: "Add Liabilities" },
                             { path: "/dashboard/Liabilities/get", label: "Liabilities History" },
 
                         ]}

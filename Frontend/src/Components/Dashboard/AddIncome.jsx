@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { EXPENSE_API_END_POINT } from "@/utils/constant";
+import { INCOME_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
 import { setLoading } from "@/redux/authSlice";
 
-const AddExpance = () => {
+const AddIncome = () => {
     const token = localStorage.getItem('token');
     const [formData, setFormData] = useState({
         amount: "",
@@ -42,7 +42,7 @@ const AddExpance = () => {
             };
 
             const response = await axios.post(
-                `${EXPENSE_API_END_POINT}/addExpense`,
+                `${INCOME_API_END_POINT}/addIncome`,
                 payload, // Sending as JSON
                 {
                     headers: {
@@ -72,7 +72,7 @@ const AddExpance = () => {
                 
                 <div className="w-full md:w-1/2 p-6">
                     <h2 className="text-2xl font-bold text-gray-800 dark:text-white text-center mb-6">
-                        Add Expense
+                        Add Income
                     </h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <AddComponent label="Amount" type="number" name="amount" value={formData.amount} onChange={handleChange} required />
@@ -111,13 +111,7 @@ const AddExpance = () => {
 
                 <div className="hidden md:flex md:w-1/2 justify-center items-center bg-gray-200 dark:bg-gray-700 
                     shadow-md dark:shadow-2xl">
-                  <img 
-    src="/images/Expance.png"  
-    alt="Expense"  
-    className="max-w-128 h-full w-full transition-all duration-300  
-               dark:brightness-75 dark:contrast-125 dark:grayscale dark:hue-rotate-180"  
-/>
-
+                    <img src="/images/Income4.png" alt="Income" className="max-w-128 h-full w-full rounded-tr rounded-br" />
                 </div>
             </div>
         </div>
@@ -141,4 +135,4 @@ const AddComponent = ({ label, type, name, value, onChange, required, className 
     );
 };
 
-export { AddExpance, AddComponent };
+export { AddIncome, AddComponent };

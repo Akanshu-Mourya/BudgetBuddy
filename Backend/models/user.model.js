@@ -14,23 +14,23 @@ const userSchema = new mongoose.Schema(
         phoneNumber: {
             type: String,
             required: function () {
-                return this.isGoogleUser === false; // Only required if not a Google user
+                return this.isGoogleUser === false; 
             },
         },
         password: {
             type: String,
             required: function () {
-                return this.isGoogleUser === false; // Only required if not a Google user
+                return this.isGoogleUser === false; 
             },
         },
         isGoogleUser: {
             type: Boolean,
-            default: false, // Default to false for traditional users
+            default: false, 
         },
         googleSub: {
             type: String,
             unique: true,
-            sparse: true, // 👈 Fix: Allows multiple `null` values
+            sparse: true, 
         },
     },
     { timestamps: true }

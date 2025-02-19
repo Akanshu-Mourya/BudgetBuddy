@@ -1,12 +1,16 @@
 import { Income } from '../models/income.models.js';
-
+import jwt from 'jsonwebtoken';
 export const addIncome = async (req, resp) => {
     try {
         const { category, amount, date, description, paymentMethod } = req.body;
+        // console.log(token);
+        // const decode = jwt.decode(token);
+        // console.log(decode.userId);
+
         const userId = req.userId;
 
         console.log(req.body);
-        
+
         if (!category || !amount || !date || !description || !paymentMethod) {
             return resp.status(400).json({
                 message: "All fields are required",

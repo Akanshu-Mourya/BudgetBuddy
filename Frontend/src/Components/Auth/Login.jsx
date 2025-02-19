@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,15 +15,17 @@ import { Loader2 } from "lucide-react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { darkThemeColor, HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
-
+import { useAuth } from "@/redux/auth";
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [input, setInput] = useState({ email: "", password: "" });
 
     const { loading, user } = useSelector((state) => state.auth);
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const { storeTokenInLS } = useAuth();
     const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
     const changeEventHandler = (e) => setInput({ ...input, [e.target.name]: e.target.value });
@@ -42,7 +45,11 @@ const Login = () => {
             });
 
             if (response.data.success) {
+                console.log("From Token", response.data.token);
+
                 dispatch(setUser(response.data.user));
+                storeTokenInLS(response.data.token);
+
                 navigate("/dashboard");
                 toast.success(response.data.message, HandleMessageUISuccess());
             }
@@ -54,11 +61,13 @@ const Login = () => {
     };
 
     const handleGoogleSuccess = (response) => {
-        const decoded = jwtDecode(response?.credential);
         axios.post(`${USER_API_END_POINT}/login`, { googleToken: response.credential })
             .then((res) => {
                 if (res.data.success) {
                     dispatch(setUser(res.data.user));
+                    console.log("Goggle Token :", res.data.token);
+
+                    storeTokenInLS(res.data.token);
                     navigate("/dashboard");
                     toast.success(res.data.message, HandleMessageUISuccess());
                 }

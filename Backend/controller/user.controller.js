@@ -20,7 +20,7 @@ export const register = async (req, resp) => {
         const existingUser = await User.findOne({ email });
 
         // Handle Google User Registration
-        if (isGoogleUser===true) {
+        if (isGoogleUser === true) {
             if (!googleSub) {
                 return resp.status(400).json({
                     message: "Google user must have a Google Sub ID",
@@ -149,6 +149,7 @@ export const login = async (req, resp) => {
                 secure: process.env.NODE_ENV === "production",
             }).json({
                 message: `Welcome back, ${userResponse.fullname}!`,
+                token,
                 user: userResponse,
                 success: true,
             });
@@ -170,7 +171,7 @@ export const login = async (req, resp) => {
             }
 
             // Check Password
-            const isValidPassword = await bcrypt.compare(password, user.password);
+            const isValidPassword = bcrypt.compare(password, user.password);
             if (!isValidPassword) {
                 return resp.status(400).json({
                     message: "Incorrect password",
@@ -196,6 +197,7 @@ export const login = async (req, resp) => {
                 secure: process.env.NODE_ENV === "production",
             }).json({
                 message: `Welcome back, ${userResponse.fullname}!`,
+                token,
                 user: userResponse,
                 success: true,
             });
@@ -210,21 +212,21 @@ export const login = async (req, resp) => {
 };
 
 
-export const logout = async (req, resp) => {
-    try {
-        return resp.status(200).cookie("token", "", { maxAge: 0 }).json({
+// export const logout = async (req, resp) => {
+//     try {
+//         return resp.status(200).cookie("token", "", { maxAge: 0 }).json({
 
-            message: "Logged out successfully.",
-            success: true
-        });
-    } catch (error) {
-        console.log(error);
-        return resp.status(500).json({
-            message: "Internal server error",
-            success: false,
-        });
-    }
-}
+//             message: "Logged out successfully.",
+//             success: true
+//         });
+//     } catch (error) {
+//         console.log(error);
+//         return resp.status(500).json({
+//             message: "Internal server error",
+//             success: false,
+//         });
+//     }
+// }
 
 // Edit Profile System aayega
 

@@ -7,6 +7,7 @@ import DeshBord from './Components/Dashboard/DeshBord';
 import { ThemeProvider } from './Components/DarkLiteMood/ThemeProvider';
 import { AddIncome } from './Components/Dashboard/AddIncome';
 import { AddExpance } from './Components/Dashboard/AddExpance';
+import AddBorrow from './Components/Dashboard/AddBorrow';
 // import Google from './Components/Auth/google.jsx';
 const appRouter = createBrowserRouter([
   {
@@ -26,13 +27,18 @@ const appRouter = createBrowserRouter([
     element: <DeshBord />
   },
   {
-    path: '/dashboard/income',
-    element: <AddIncome/>
+    path: '/dashboard/income/create',
+    element: <AddIncome />
   },
   {
-    path: '/dashboard/expense',
-    element: <AddExpance/>
+    path: '/dashboard/expense/create',
+    element: <AddExpance />
+  },
+  {
+    path:'dashboard/Liabilities/create',
+    element:<AddBorrow/>
   }
+
 ]);
 
 function App() {

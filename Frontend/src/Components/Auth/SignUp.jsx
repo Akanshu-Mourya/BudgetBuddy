@@ -12,6 +12,8 @@ import axios from "axios";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { darkThemeColor, HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
+import { useAuth } from "@/redux/auth";
+
 
 const SignUp = () => {
   const [input, setInput] = useState({
@@ -28,6 +30,7 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { storeTokenInLS } = useAuth();
   // Handle form input change
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -63,7 +66,7 @@ const SignUp = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const newErrors = validate();
-    
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -91,6 +94,7 @@ const SignUp = () => {
       });
 
       if (res.data.success) {
+        storeTokenInLS(res.data.token);
         toast.success(res.data.message, HandleMessageUISuccess());
         navigate("/dashboard");
       }
@@ -118,6 +122,9 @@ const SignUp = () => {
       });
 
       if (res.data.success) {
+        // console.log("Goggle Token :",res.data.token);
+        
+        storeTokenInLS(res.data.token);
         toast.success("Google registration successful!", HandleMessageUISuccess());
         navigate("/dashboard");
       }
@@ -129,7 +136,7 @@ const SignUp = () => {
   // Handle Google login error
   const handleGoogleError = (error) => {
     console.log("Google Login Error", error);
-    toast.error("Google login failed",HandleMessageUIError());
+    toast.error("Google login failed", HandleMessageUIError());
   };
 
   useEffect(() => {
